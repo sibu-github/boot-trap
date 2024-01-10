@@ -84,7 +84,14 @@ function App(): React.JSX.Element {
                 source={require(LOGO_IMAGE_PATH)}
                 style={{width: 40, height: 40}}
               />
-              <Text>Boot Trap</Text>
+              <Text
+                style={{
+                  fontFamily: 'Kalam-Bold',
+                  fontSize: 20,
+                  color: COLOR_BLACK,
+                }}>
+                Boot Trap
+              </Text>
               <Icon name="menu" size={40} color={COLOR_BLACK} />
             </View>
           ),

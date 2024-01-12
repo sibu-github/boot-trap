@@ -17,6 +17,9 @@ import {KALAM_BOLD} from './utils';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Provider} from 'react-redux';
+import {store} from './redux/store';
+import {navigationRef} from './definitions';
 
 const Drawer = createDrawerNavigator();
 
@@ -46,55 +49,57 @@ function App(): React.JSX.Element {
   useEffect(() => SplashScreen.hide(), []);
   const header = (props: DrawerHeaderProps) => <Header {...props} />;
   return (
-    <NavigationContainer>
-      <StatusBar backgroundColor={COLOR_BLACK} />
-      <Drawer.Navigator
-        screenOptions={{
-          drawerContentStyle: {
-            backgroundColor: COLOR_YELLOW,
-          },
-          drawerActiveTintColor: COLOR_BLACK,
-          drawerActiveBackgroundColor: COLOR_WHITE,
-          drawerLabelStyle: {
-            fontFamily: KALAM_BOLD,
-            fontSize: 20,
-            color: COLOR_BLACK,
-          },
-          headerShown: true,
-          drawerPosition: 'right',
-          header,
-        }}
-        initialRouteName="Rules">
-        <Drawer.Screen
-          name="Game"
-          component={Game}
-          options={{
-            drawerIcon: GameDrawerIcon,
+    <Provider store={store}>
+      <NavigationContainer ref={navigationRef}>
+        <StatusBar backgroundColor={COLOR_BLACK} />
+        <Drawer.Navigator
+          screenOptions={{
+            drawerContentStyle: {
+              backgroundColor: COLOR_YELLOW,
+            },
+            drawerActiveTintColor: COLOR_BLACK,
+            drawerActiveBackgroundColor: COLOR_WHITE,
+            drawerLabelStyle: {
+              fontFamily: KALAM_BOLD,
+              fontSize: 20,
+              color: COLOR_BLACK,
+            },
+            headerShown: true,
+            drawerPosition: 'right',
+            header,
           }}
-        />
-        <Drawer.Screen
-          name="Rules"
-          component={Rules}
-          options={{
-            drawerIcon: RulesDrawerIcon,
-          }}
-        />
-        <Drawer.Screen
-          name="Settings"
-          component={Settings}
-          options={{
-            drawerIcon: SettingsDrawerIcon,
-          }}
-        />
-        <Drawer.Screen
-          name="Donate"
-          component={Donate}
-          options={{
-            drawerIcon: DonateDrawerIcon,
-          }}
-        />
-      </Drawer.Navigator>
-    </NavigationContainer>
+          initialRouteName="Rules">
+          <Drawer.Screen
+            name="Game"
+            component={Game}
+            options={{
+              drawerIcon: GameDrawerIcon,
+            }}
+          />
+          <Drawer.Screen
+            name="Rules"
+            component={Rules}
+            options={{
+              drawerIcon: RulesDrawerIcon,
+            }}
+          />
+          <Drawer.Screen
+            name="Settings"
+            component={Settings}
+            options={{
+              drawerIcon: SettingsDrawerIcon,
+            }}
+          />
+          <Drawer.Screen
+            name="Donate"
+            component={Donate}
+            options={{
+              drawerIcon: DonateDrawerIcon,
+            }}
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

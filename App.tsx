@@ -5,9 +5,11 @@ import {store} from './redux/store';
 import DrawerNavigator from './components/DrawerNavigator';
 import {StatusBar} from 'react-native';
 import {COLOR_BLACK} from './utils';
+import {loadAllMusic} from './utils/sound';
 
 function App() {
   useEffect(() => SplashScreen.hide(), []);
+  useEffect(() => loadAllMusic(), []);
 
   return (
     <Provider store={store}>

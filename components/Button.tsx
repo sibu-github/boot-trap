@@ -1,6 +1,9 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
 import {COLOR_BLACK, COLOR_YELLOW, KALAM_REGULAR} from '../utils';
+import {useAppSelector} from '../redux/useTypeSelectorHook';
+import {OnOffMode} from '../definitions';
+import {playClickOneSound} from '../utils/sound';
 
 type ButtonProps = {
   text: string;
@@ -10,8 +13,17 @@ type ButtonProps = {
 };
 
 function Button(props: ButtonProps) {
+  const {soundMode} = useAppSelector(state => state.settings);
+
+  const onPress = () => {
+    if (soundMode === OnOffMode.On) {
+      playClickOneSound();
+    }
+    props.onClick();
+  };
+
   return (
-    <Pressable style={[styles.btn, props.style]} onPress={props.onClick}>
+    <Pressable style={[styles.btn, props.style]} onPress={onPress}>
       <Text style={[styles.btnTxt, props.textStyle]}>{props.text}</Text>
     </Pressable>
   );

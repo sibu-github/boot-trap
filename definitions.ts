@@ -18,3 +18,18 @@ export type RootStackParamList = {
 };
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
+
+export type BoardMove = {
+  boardIndex: number;
+  x: number;
+  y: number;
+};
+
+export type BoardContent = string[][];
+
+export type BoardProps = {
+  content: BoardContent;
+  boardIndex: number;
+  player1Moves: BoardMove[];
+  player2Moves: BoardMove[];
+};

@@ -11,7 +11,7 @@ import Header from './Header';
 import {navigationRef} from '../definitions';
 import {NavigationContainer} from '@react-navigation/native';
 import {COLOR_BLACK, COLOR_WHITE, COLOR_YELLOW, KALAM_BOLD} from '../utils';
-import Game from './Game';
+import GameView from './GameView';
 import Rules from './Rules';
 import Settings from './Settings';
 import AboutUs from './AboutUs';
@@ -64,7 +64,7 @@ function DrawerNavigator() {
         initialRouteName="Rules">
         <Drawer.Screen
           name="Game"
-          component={Game}
+          component={GameView}
           options={{
             drawerIcon: GameDrawerIcon,
           }}

@@ -7,3 +7,4 @@ export const COLOR_GREY = '#E5E5E5';
 export const COLOR_GREEN = '#40bf40';
 export const COLOR_MAROON = '#7D0A0A';
 export const COLOR_DARK_GREEN = '#1A5D1A';
+export const COLOR_OVERLAY = '#E5E5E573';

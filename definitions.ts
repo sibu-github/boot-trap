@@ -1,7 +1,4 @@
-import {
-  CommonActions,
-  createNavigationContainerRef,
-} from '@react-navigation/native';
+import {createNavigationContainerRef} from '@react-navigation/native';
 
 export enum OnOffMode {
   Off,
@@ -21,12 +18,3 @@ export type RootStackParamList = {
 };
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
-
-export function navigateTo(
-  routeName: keyof RootStackParamList,
-  params?: object,
-) {
-  if (navigationRef.isReady()) {
-    navigationRef.dispatch(CommonActions.navigate(routeName, params));
-  }
-}

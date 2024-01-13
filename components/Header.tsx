@@ -12,7 +12,7 @@ function Header(props: DrawerHeaderProps) {
       <Image source={require(LOGO_IMAGE_PATH)} style={styles.logo} />
       <View style={styles.titleWrapper}>
         <Text style={styles.titleTxt}>Boot Trap</Text>
-        <Text style={styles.subTxt}>(A "fair" Tic-Tac-Toe)</Text>
+        <Text style={styles.subTxt}>"X" only Tic-Tac-Toe</Text>
       </View>
       <Icon
         name="menu"

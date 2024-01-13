@@ -10,10 +10,10 @@ import {
   COLOR_WHITE,
   KALAM_BOLD,
   KALAM_LIGHT,
+  navigateTo,
 } from '../utils';
-import {useAppSelector} from '../redux/useTypeSelectorHook';
-import {OnOffMode, navigateTo} from '../definitions';
 import Button from './Button';
+import {useBackgroundColor, useTextColor} from '../hooks';
 
 const RULES_BOARD_1 = '../images/rules_board_1.png';
 const RULES_BOARD_2 = '../images/rules_board_1.png';
@@ -21,15 +21,10 @@ const RULES_BOARD_3_1 = '../images/rules_board_3_1.png';
 const RULES_BOARD_3_2 = '../images/rules_board_3_2.png';
 
 function Rules() {
-  const {darkMode} = useAppSelector(state => state.settings);
+  const txtColor = useTextColor();
+  const containerBgColor = useBackgroundColor();
 
-  const txtColor = darkMode === OnOffMode.On ? COLOR_WHITE : COLOR_BLACK;
-  const containerBgColor =
-    darkMode === OnOffMode.On ? COLOR_BLACK : COLOR_WHITE;
-
-  const onLetsGo = () => {
-    navigateTo('Game');
-  };
+  const onLetsGo = () => navigateTo('Game');
 
   return (
     <ScrollView

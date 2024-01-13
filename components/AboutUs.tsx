@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLOR_GREY,
     borderRadius: 10,
+    alignItems: 'center',
   },
   upiIdTxt: {
     fontFamily: KALAM_REGULAR,

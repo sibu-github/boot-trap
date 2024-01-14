@@ -1,6 +1,8 @@
 import {Platform, ToastAndroid} from 'react-native';
 import {RootStackParamList, navigationRef} from '../definitions';
 import {CommonActions} from '@react-navigation/native';
+import {BOARD_COL_SIZE, BoardMove} from '../lib';
+import {COL_MARKERS, ROW_MARKERS} from '.';
 
 const TOAST_MESSAGE_DURATION = 2000;
 
@@ -17,4 +19,9 @@ export function navigateTo(
   if (navigationRef.isReady()) {
     navigationRef.dispatch(CommonActions.navigate(routeName, params));
   }
+}
+
+export function translateBoardMove(move: BoardMove) {
+  const idx = move.boardIndex * BOARD_COL_SIZE + move.y;
+  return `${ROW_MARKERS[idx]}${COL_MARKERS[move.x]}`;
 }

@@ -27,4 +27,13 @@ export type BoardViewProps = {
   player2Moves: BoardMove[];
   lastMove: BoardMove | undefined;
   onPress: (move: BoardMove) => void;
+  smallBoard?: boolean;
+  flipTextColor?: boolean;
+};
+
+export type GameMovesProps = {
+  player1Moves: BoardMove[];
+  player2Moves: BoardMove[];
+  smallBoard?: boolean;
+  flipTextColor?: boolean;
 };

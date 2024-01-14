@@ -7,8 +7,10 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {BOARD_COL_SIZE, DeadBoardLineType} from '../lib';
+import {BOARD_COL_SIZE, BOARD_ROW_SIZE, DeadBoardLineType} from '../lib';
 import {
+  BIG_BOARD_CELL_SIZE,
+  BIG_BOARD_TXT_SIZE,
   COLOR_MAROON,
   COLOR_OVERLAY,
   COLOR_YELLOW,
@@ -17,6 +19,8 @@ import {
   PLAYER_1_COLOR,
   PLAYER_2_COLOR,
   ROW_MARKERS,
+  SMALL_BOARD_CELL_SIZE,
+  SMALL_BOARD_TXT_SIZE,
 } from '../utils';
 import {useTextColor} from '../hooks';
 import {BoardViewProps} from '../definitions';
@@ -35,75 +39,91 @@ function borderStyle(x: number, y: number) {
 
 function deadBoardMarkerLineStyle(
   lineType: DeadBoardLineType | undefined,
+  smallBoard: boolean,
 ): StyleProp<ViewStyle> {
+  const cellSize = smallBoard ? SMALL_BOARD_CELL_SIZE : BIG_BOARD_CELL_SIZE;
+  const lineWidth = smallBoard ? 2 : 5;
   const line: StyleProp<ViewStyle> = {
     backgroundColor: COLOR_MAROON,
     position: 'absolute',
   };
   const horizontalLine: StyleProp<ViewStyle> = {
     ...line,
-    height: 5,
-    width: 150,
-    left: 20,
+    height: lineWidth,
+    width: cellSize * 2.5,
+    left: smallBoard ? 10 : 20,
   };
   const verticalLine: StyleProp<ViewStyle> = {
     ...line,
-    height: 150,
-    width: 5,
-    top: 20,
+    height: cellSize * 2.5,
+    width: lineWidth,
+    top: smallBoard ? 10 : 20,
   };
 
   if (lineType === DeadBoardLineType.HorizontalOne) {
-    return {...horizontalLine, bottom: 170};
+    return {...horizontalLine, bottom: smallBoard ? 63 : 170};
   }
   if (lineType === DeadBoardLineType.HorizontalTwo) {
-    return {...horizontalLine, bottom: 110};
+    return {...horizontalLine, bottom: smallBoard ? 43 : 110};
   }
   if (lineType === DeadBoardLineType.HorizontalThree) {
-    return {...horizontalLine, bottom: 50};
+    return {...horizontalLine, bottom: smallBoard ? 23 : 50};
   }
   if (lineType === DeadBoardLineType.VerticalOne) {
-    return {...verticalLine, left: 35};
+    return {...verticalLine, left: smallBoard ? 16 : 35};
   }
   if (lineType === DeadBoardLineType.VerticalTwo) {
-    return {...verticalLine, left: 95};
+    return {...verticalLine, left: smallBoard ? 36 : 95};
   }
   if (lineType === DeadBoardLineType.VerticalThree) {
-    return {...verticalLine, left: 155};
+    return {...verticalLine, left: smallBoard ? 56 : 155};
   }
   if (lineType === DeadBoardLineType.DiagonalOne) {
     return {
-      width: 240,
+      width: cellSize * 4,
       borderTopColor: COLOR_MAROON,
-      borderTopWidth: 5,
+      borderTopWidth: lineWidth,
       transform: [{rotate: '45deg'}],
       transformOrigin: 'top left',
       position: 'absolute',
-      top: 10,
-      left: 10,
+      top: smallBoard ? 2 : 10,
+      left: smallBoard ? 2 : 10,
     };
   }
   if (lineType === DeadBoardLineType.DiagonalTwo) {
     return {
-      width: 240,
+      width: cellSize * 4,
       borderTopColor: COLOR_MAROON,
-      borderTopWidth: 5,
+      borderTopWidth: lineWidth,
       transform: [{rotate: '-45deg'}],
       transformOrigin: 'top right',
       position: 'absolute',
-      top: 10,
-      right: 10,
+      top: smallBoard ? 2 : 10,
+      right: smallBoard ? 2 : 10,
     };
   }
 }
 
 function BoardView(props: BoardViewProps) {
-  const textColor = useTextColor();
-  const containerStyle = {};
+  const textColor = useTextColor(props.flipTextColor);
+  const containerStyle = {width: BIG_BOARD_CELL_SIZE * BOARD_ROW_SIZE + 10};
+  if (props.smallBoard) {
+    containerStyle.width = SMALL_BOARD_CELL_SIZE * BOARD_ROW_SIZE + 10;
+  }
   const cellStyle = {
     borderColor: textColor,
+    width: BIG_BOARD_CELL_SIZE,
+    height: BIG_BOARD_CELL_SIZE,
   };
+  if (props.smallBoard) {
+    cellStyle.height = SMALL_BOARD_CELL_SIZE;
+    cellStyle.width = SMALL_BOARD_CELL_SIZE;
+  }
   const cellTxtStyle = (x: number, y: number) => {
+    const cellTxt = {fontSize: BIG_BOARD_TXT_SIZE, color: textColor};
+    if (props.smallBoard) {
+      cellTxt.fontSize = SMALL_BOARD_TXT_SIZE;
+    }
     const color = props.player1Moves?.some(
       m => m.boardIndex === props.boardIndex && m.x === x && m.y === y,
     )
@@ -113,7 +133,8 @@ function BoardView(props: BoardViewProps) {
         )
       ? PLAYER_2_COLOR
       : textColor;
-    return {color};
+    cellTxt.color = color;
+    return cellTxt;
   };
 
   const lastMoveCellStyle = (x: number, y: number) => {
@@ -136,11 +157,18 @@ function BoardView(props: BoardViewProps) {
     }
   };
 
+  const rowMarkerTxtSize = props.smallBoard ? 8 : 11;
+  const cellMarkerTxtSize = props.smallBoard ? 8 : 10;
+
   return (
     <View style={[styles.container, containerStyle]}>
       {props.board.items.map((row, y) => (
         <View key={y} style={styles.boardRow}>
-          <Text style={[styles.rowMarkerTxt, {color: textColor}]}>
+          <Text
+            style={[
+              styles.rowMarkerTxt,
+              {color: textColor, fontSize: rowMarkerTxtSize},
+            ]}>
             {ROW_MARKERS[props.boardIndex * BOARD_COL_SIZE + y]}
           </Text>
           {row.map((cell, x) => (
@@ -157,7 +185,12 @@ function BoardView(props: BoardViewProps) {
       ))}
       <View style={styles.boardRow}>
         {COL_MARKERS.map(m => (
-          <Text key={m} style={[styles.colMarkerTxt, {color: textColor}]}>
+          <Text
+            key={m}
+            style={[
+              styles.colMarkerTxt,
+              {color: textColor, fontSize: cellMarkerTxtSize},
+            ]}>
             {m}
           </Text>
         ))}
@@ -165,7 +198,10 @@ function BoardView(props: BoardViewProps) {
       {props.board?.isDead() && <View style={styles.deadBoard} />}
       {props.board?.isDead() && (
         <View
-          style={deadBoardMarkerLineStyle(props.board?.getDeadBoardLineType())}
+          style={deadBoardMarkerLineStyle(
+            props.board?.getDeadBoardLineType(),
+            !!props.smallBoard,
+          )}
         />
       )}
     </View>
@@ -174,7 +210,6 @@ function BoardView(props: BoardViewProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 190,
     position: 'relative',
   },
   boardRow: {
@@ -183,29 +218,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cell: {
-    width: 60,
-    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },
   cellTxt: {
-    fontSize: 30,
     fontFamily: KALAM_BOLD,
   },
   cellTxtWrapper: {
-    width: 55,
-    height: 55,
+    width: '90%',
+    height: '90%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   rowMarkerTxt: {
     fontFamily: KALAM_BOLD,
-    fontSize: 11,
+    width: 10,
   },
   colMarkerTxt: {
+    flex: 1,
     fontFamily: KALAM_BOLD,
-    fontSize: 10,
-    width: 60,
     textAlign: 'center',
   },
   deadBoard: {

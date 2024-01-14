@@ -12,11 +12,16 @@ export const ROW_MARKERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 export const COL_MARKERS = ['1', '2', '3'];
 
 export const RULES_LIST = [
-  'Both players enter "X"',
+  'Both players enter "X".',
   'Game starts with 3 boards.',
   'You can choose to make a move on any board.',
-  'Once a 3"X" in a line is made on any board then that particular board is marked as dead.',
+  'Once a 3"X" in a line is made on any board then only that particular board is marked as dead.',
   'Play continues on other non dead boards.',
   'Whoever makes 3"X" in a line on the last board, looses the game.',
   'As a player your strategy should be to force your opponent to make 3"X" in a line on the last board.',
 ];
+
+export const SMALL_BOARD_CELL_SIZE = 20;
+export const BIG_BOARD_CELL_SIZE = 60;
+export const SMALL_BOARD_TXT_SIZE = 10;
+export const BIG_BOARD_TXT_SIZE = 30;

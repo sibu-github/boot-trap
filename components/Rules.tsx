@@ -10,6 +10,7 @@ import {
   COLOR_WHITE,
   KALAM_BOLD,
   KALAM_LIGHT,
+  RULES_LIST,
   navigateTo,
 } from '../utils';
 import Button from './Button';
@@ -74,14 +75,6 @@ type RulesListProps = {
   textColor: string;
 };
 function RulesList(props: RulesListProps) {
-  const RULES_LIST = [
-    'Game starts with 3 boards.',
-    'You can choose to make a move on any board.',
-    'Once a 3"X" in a line is made on any board then that particular board is marked as dead.',
-    'Play continues on other non dead boards.',
-    'Whoever makes 3"X" in a line on the last board, looses the game.',
-    'As a player your strategy should be to force your opponent to make 3"X" in a line on the last board.',
-  ];
   return (
     <View style={styles.rulesContaier}>
       {RULES_LIST.map((rule, idx) => (

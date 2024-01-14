@@ -7,27 +7,21 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import Board from '../lib/board';
-import {BoardMove, DeadBoardLineType} from '../lib';
+import {BOARD_COL_SIZE, DeadBoardLineType} from '../lib';
 import {
   COLOR_MAROON,
   COLOR_OVERLAY,
+  COLOR_YELLOW,
+  COL_MARKERS,
   KALAM_BOLD,
   PLAYER_1_COLOR,
   PLAYER_2_COLOR,
+  ROW_MARKERS,
 } from '../utils';
 import {useTextColor} from '../hooks';
+import {BoardViewProps} from '../definitions';
 
-type BoardViewProps = {
-  board: Board;
-  boardIndex: number;
-  player1Moves: BoardMove[];
-  player2Moves: BoardMove[];
-  lastMove: BoardMove | undefined;
-  onPress: (move: BoardMove) => void;
-};
-
-const borderStyle = (x: number, y: number) => {
+function borderStyle(x: number, y: number) {
   if ((y === 0 || y === 1) && (x === 0 || x === 1)) {
     return {borderBottomWidth: 2, borderRightWidth: 2};
   }
@@ -37,11 +31,11 @@ const borderStyle = (x: number, y: number) => {
   if (y === 2 && (x === 0 || x === 1)) {
     return {borderRightWidth: 2};
   }
-};
+}
 
-const deadBoardMarkerLineStyle = (
+function deadBoardMarkerLineStyle(
   lineType: DeadBoardLineType | undefined,
-): StyleProp<ViewStyle> => {
+): StyleProp<ViewStyle> {
   const line: StyleProp<ViewStyle> = {
     backgroundColor: COLOR_MAROON,
     position: 'absolute',
@@ -58,8 +52,6 @@ const deadBoardMarkerLineStyle = (
     width: 5,
     top: 20,
   };
-
-  console.log('lineType is', lineType);
 
   if (lineType === DeadBoardLineType.HorizontalOne) {
     return {...horizontalLine, bottom: 170};
@@ -103,10 +95,7 @@ const deadBoardMarkerLineStyle = (
       right: 10,
     };
   }
-};
-
-const ROW_MARKERS = ['A', 'B', 'C'];
-const COL_MARKERS = ['1', '2', '3'];
+}
 
 function BoardView(props: BoardViewProps) {
   const textColor = useTextColor();
@@ -127,6 +116,20 @@ function BoardView(props: BoardViewProps) {
     return {color};
   };
 
+  const lastMoveCellStyle = (x: number, y: number) => {
+    if (!props.lastMove) {
+      return;
+    }
+    if (
+      props.lastMove.boardIndex === props.boardIndex &&
+      props.lastMove.x === x &&
+      props.lastMove.y === y
+    ) {
+      return {backgroundColor: COLOR_YELLOW};
+    }
+    return {};
+  };
+
   const onPress = (x: number, y: number) => {
     if (props.board.items[y][x] === '') {
       props.onPress({boardIndex: props.boardIndex, x, y});
@@ -138,14 +141,16 @@ function BoardView(props: BoardViewProps) {
       {props.board.items.map((row, y) => (
         <View key={y} style={styles.boardRow}>
           <Text style={[styles.rowMarkerTxt, {color: textColor}]}>
-            {ROW_MARKERS[y]}
+            {ROW_MARKERS[props.boardIndex * BOARD_COL_SIZE + y]}
           </Text>
           {row.map((cell, x) => (
             <Pressable
               key={x}
               style={[styles.cell, cellStyle, borderStyle(x, y)]}
               onPress={() => onPress(x, y)}>
-              <Text style={[styles.cellTxt, cellTxtStyle(x, y)]}>{cell}</Text>
+              <View style={[styles.cellTxtWrapper, lastMoveCellStyle(x, y)]}>
+                <Text style={[styles.cellTxt, cellTxtStyle(x, y)]}>{cell}</Text>
+              </View>
             </Pressable>
           ))}
         </View>
@@ -186,6 +191,12 @@ const styles = StyleSheet.create({
   cellTxt: {
     fontSize: 30,
     fontFamily: KALAM_BOLD,
+  },
+  cellTxtWrapper: {
+    width: 55,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   rowMarkerTxt: {
     fontFamily: KALAM_BOLD,

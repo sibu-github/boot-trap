@@ -7,7 +7,7 @@ import {
   MisereQuotient,
 } from './definitions';
 
-class Board {
+export class Board {
   colSize: number;
   rowSize: number;
   private _items: string[][];

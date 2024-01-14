@@ -8,7 +8,7 @@ export const UPI_ID = 'Q921982347@ybl';
 export const PLAYER_1_COLOR = COLOR_RED;
 export const PLAYER_2_COLOR = COLOR_VIOLET;
 
-export const ROW_MARKERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+export const ROW_MARKERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'];
 export const COL_MARKERS = ['1', '2', '3'];
 
 export const RULES_LIST = [
@@ -25,3 +25,4 @@ export const SMALL_BOARD_CELL_SIZE = 20;
 export const BIG_BOARD_CELL_SIZE = 60;
 export const SMALL_BOARD_TXT_SIZE = 10;
 export const BIG_BOARD_TXT_SIZE = 30;
+export const BOT_MOVE_TIMEOUT = 500;

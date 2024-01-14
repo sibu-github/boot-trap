@@ -7,8 +7,9 @@ import {Board, BoardMove} from '../lib';
 import BoardView from './BoardView';
 import {COLOR_GREEN, COLOR_RED, KALAM_LIGHT} from '../utils';
 import GameMoves from './GameMoves';
+import {PlayerNumber} from '../definitions';
 
-const allMoves: {move: BoardMove; player: 'one' | 'two'}[] = [
+const allMoves: {move: BoardMove; player: PlayerNumber}[] = [
   {move: {boardIndex: 0, x: 0, y: 0}, player: 'one'},
   {move: {boardIndex: 0, x: 1, y: 1}, player: 'two'},
   {move: {boardIndex: 0, x: 2, y: 0}, player: 'one'},
@@ -23,7 +24,7 @@ const allMoves: {move: BoardMove; player: 'one' | 'two'}[] = [
   {move: {boardIndex: 1, x: 1, y: 2}, player: 'two'},
 ];
 
-function playerMoves(boardIndex: number, player: 'one' | 'two'): BoardMove[] {
+function playerMoves(boardIndex: number, player: PlayerNumber): BoardMove[] {
   if (boardIndex === -1) {
     return allMoves
       .filter(item => item.player === player)

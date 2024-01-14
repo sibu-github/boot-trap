@@ -15,3 +15,8 @@ export function useBackgroundColor() {
   const bgColor = darkMode === OnOffMode.On ? COLOR_BLACK : COLOR_WHITE;
   return bgColor;
 }
+
+export function useSoundMode() {
+  const {soundMode} = useAppSelector(state => state.settings);
+  return soundMode === OnOffMode.On;
+}

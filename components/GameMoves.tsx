@@ -34,6 +34,7 @@ function GameMoves(props: GameMovesProps) {
   const containerStyle = {
     width: props.smallBoard ? 45 : 100,
   };
+
   const blankViewStyle = {
     width: containerStyle.width,
     height: props.smallBoard ? 17 : 40,
@@ -73,6 +74,7 @@ function GameMoves(props: GameMovesProps) {
         <Text style={playerTxtStyle}>Player 2</Text>
         <View style={[playerColorBox, {backgroundColor: PLAYER_2_COLOR}]} />
       </View>
+      <View style={styles.blankLine} />
       {getAllMoves(props.player1Moves, props.player2Moves).map((item, idx) => (
         <View key={idx} style={styles.movesTxtWrapper}>
           <DotView backgroundColor={item.color} />
@@ -98,10 +100,14 @@ const styles = StyleSheet.create({
   blankView: {
     borderWidth: 1,
     borderColor: COLOR_GREY,
-
     position: 'absolute',
     top: -1,
     left: -1,
+  },
+  blankLine: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR_GREY,
   },
   movesTxtWrapper: {
     flexDirection: 'row',

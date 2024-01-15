@@ -21,16 +21,16 @@ export enum PlayerType {
   Computer = 2,
 }
 
+export type BoardItems = string[][];
+
 export type BoardMove = {
   boardIndex: number;
   x: number;
   y: number;
 };
 
-export enum CurrentPlayer {
-  One = 1,
-  Two = 2,
-}
+export type PlayerNumber = 'one' | 'two';
+export type GameMode = 'Practice' | 'Challenge';
 
 export enum DeadBoardLineType {
   HorizontalOne = 1,

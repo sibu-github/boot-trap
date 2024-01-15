@@ -1,5 +1,12 @@
 import {createNavigationContainerRef} from '@react-navigation/native';
-import {BoardMove, Board, PlayerType} from './lib';
+import {
+  BoardMove,
+  Board,
+  PlayerType,
+  GameMode,
+  PlayerNumber,
+  BoardItems,
+} from './lib';
 
 export enum OnOffMode {
   Off,
@@ -14,15 +21,28 @@ export interface SettingsState {
 type GamePage = 'Landing' | 'GameBoard';
 export interface GameStateState {
   gamePage: GamePage;
+  isReady: boolean;
   gameMode: GameMode;
   playerOneType: PlayerType;
   playerTwoType: PlayerType;
+  currentPlayer: PlayerNumber;
+  player1Moves: BoardMove[];
+  player2Moves: BoardMove[];
+  lastMove: BoardMove | undefined;
+  winner: PlayerNumber | undefined;
+  boardItems: BoardItems[];
 }
 
 export type GameStartPayload = {
   gameMode: GameMode;
   playerOneType: PlayerType;
   playerTwoType: PlayerType;
+};
+
+export type UpdateMovePayload = {
+  move: BoardMove;
+  newBoardItems: BoardItems[];
+  player: PlayerNumber;
 };
 
 export type RootStackParamList = {
@@ -51,6 +71,3 @@ export type GameMovesProps = {
   smallBoard?: boolean;
   flipTextColor?: boolean;
 };
-
-export type GameMode = 'Practice' | 'Challenge';
-export type PlayerNumber = 'one' | 'two';

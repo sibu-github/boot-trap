@@ -2,6 +2,7 @@ import {findInValueMapping} from './boardValueMapping';
 import {
   BOARD_COL_SIZE,
   BOARD_ROW_SIZE,
+  BoardItems,
   DeadBoardLineType,
   MARKER_CHAR,
   MisereQuotient,
@@ -10,12 +11,19 @@ import {
 export class Board {
   colSize: number;
   rowSize: number;
-  private _items: string[][];
+  private _items: BoardItems;
 
-  constructor() {
+  constructor(items?: BoardItems) {
     this.colSize = BOARD_COL_SIZE;
     this.rowSize = BOARD_ROW_SIZE;
     this._items = this.emptyArray();
+    if (items) {
+      items.forEach((row, y) => {
+        row.forEach((v, x) => {
+          this._items[y][x] = v;
+        });
+      });
+    }
   }
 
   private emptyArray() {
@@ -33,12 +41,7 @@ export class Board {
   }
 
   public clone() {
-    const board = new Board();
-    for (let y = 0; y < this.colSize; y++) {
-      for (let x = 0; x < this.rowSize; x++) {
-        board._items[y][x] = this._items[y][x];
-      }
-    }
+    const board = new Board(this._items);
     return board;
   }
 

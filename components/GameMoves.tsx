@@ -45,7 +45,7 @@ function GameMoves(props: GameMovesProps) {
     fontSize: props.smallBoard ? 10 : 24,
   };
   const movesTxtStyle = {
-    fontSize: props.smallBoard ? 8 : 16,
+    fontSize: props.smallBoard ? 6 : 12,
   };
   const playerColorBox = {
     width: props.smallBoard ? 8 : 15,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '100%',
-    paddingTop: 5,
+    paddingTop: 3,
   },
 });
 

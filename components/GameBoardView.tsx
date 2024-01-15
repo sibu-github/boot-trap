@@ -3,16 +3,13 @@ import {StyleSheet, Text, View} from 'react-native';
 import {KALAM_LIGHT} from '../utils';
 import {useSoundMode, useTextColor} from '../hooks';
 import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
-import {
-  playClickOneSound,
-  playGameOverSound,
-  playGameWinSound,
-} from '../utils/sound';
+import {playClickOneSound} from '../utils/sound';
 import GameMoves from './GameMoves';
 import BoardView from './BoardView';
 import PlayerInfo from './PlayerInfo';
-import {Board, BoardMove, PlayerType, isUserMove, makeMove} from '../lib';
+import {Board, BoardMove, isUserMove, makeMove} from '../lib';
 import {computerMoveThunk, newGame, updateMove} from '../redux/gameState';
+import GameWinner from './GameWinner';
 
 function GameBoardView() {
   const textColor = useTextColor();
@@ -42,28 +39,6 @@ function GameBoardView() {
       dispatch(computerMoveThunk());
     }
   }, [currentPlayer, dispatch, isReady, playerOneType, playerTwoType, winner]);
-
-  useEffect(() => {
-    if (!winner) {
-      return;
-    }
-    let isGameWin = false;
-    if (winner === 'one' && playerOneType === PlayerType.Human) {
-      isGameWin = true;
-    }
-    if (winner === 'two' && playerOneType === PlayerType.Computer) {
-      isGameWin = true;
-    }
-    if (soundMode) {
-      if (isGameWin) {
-        console.log('play game win', winner, playerOneType);
-        playGameWinSound();
-      } else {
-        console.log('play game over', winner, playerOneType);
-        playGameOverSound();
-      }
-    }
-  }, [playerOneType, soundMode, winner]);
 
   useEffect(() => {
     startNewGame();
@@ -105,6 +80,7 @@ function GameBoardView() {
           ))}
         </View>
       </View>
+      <GameWinner />
     </View>
   );
 }
@@ -112,6 +88,7 @@ function GameBoardView() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   avoidTxt: {
     fontFamily: KALAM_LIGHT,

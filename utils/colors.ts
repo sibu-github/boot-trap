@@ -8,4 +8,5 @@ export const COLOR_GREEN = '#40bf40';
 export const COLOR_MAROON = '#7D0A0A';
 export const COLOR_DARK_GREEN = '#1A5D1A';
 export const COLOR_OVERLAY = '#E5E5E573';
+export const COLOR_OVERLAY_DARK = '#E5E5E5CF';
 export const COLOR_LIGHT_YELLOW = '#FCF498';

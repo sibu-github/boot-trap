@@ -16,6 +16,7 @@ export enum OnOffMode {
 export interface SettingsState {
   darkMode: OnOffMode;
   soundMode: OnOffMode;
+  showSuggestedMove: OnOffMode;
 }
 
 type GamePage = 'Landing' | 'GameBoard';
@@ -32,6 +33,8 @@ export interface GameStateState {
   lastMove: BoardMove | undefined;
   winner: PlayerNumber | undefined;
   boardItems: BoardItems[];
+  suggestedMove: BoardMove | undefined;
+  scoringMoves: BoardMove[];
 }
 
 export type GameStartPayload = {
@@ -61,6 +64,7 @@ export type BoardViewProps = {
   player1Moves: BoardMove[];
   player2Moves: BoardMove[];
   lastMove: BoardMove | undefined;
+  suggestedMove?: BoardMove;
   onPress: (move: BoardMove) => void;
   smallBoard?: boolean;
   flipTextColor?: boolean;

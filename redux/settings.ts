@@ -4,6 +4,7 @@ import {OnOffMode, SettingsState} from '../definitions';
 const initialState: SettingsState = {
   darkMode: OnOffMode.On,
   soundMode: OnOffMode.On,
+  showSuggestedMove: OnOffMode.On,
 };
 const settingsSlice = createSlice({
   name: 'settingsSlice',
@@ -15,7 +16,11 @@ const settingsSlice = createSlice({
     updateSoundMode: (state, action: PayloadAction<OnOffMode>) => {
       state.soundMode = action.payload;
     },
+    updateShowSuggestedMove: (state, action: PayloadAction<OnOffMode>) => {
+      state.showSuggestedMove = action.payload;
+    },
   },
 });
-export const {updateDarkMode, updateSoundMode} = settingsSlice.actions;
+export const {updateDarkMode, updateSoundMode, updateShowSuggestedMove} =
+  settingsSlice.actions;
 export default settingsSlice;

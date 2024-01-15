@@ -11,6 +11,7 @@ import {BOARD_COL_SIZE, BOARD_ROW_SIZE, DeadBoardLineType} from '../lib';
 import {
   BIG_BOARD_CELL_SIZE,
   BIG_BOARD_TXT_SIZE,
+  COLOR_GREEN,
   COLOR_MAROON,
   COLOR_OVERLAY,
   COLOR_YELLOW,
@@ -139,7 +140,7 @@ function BoardView(props: BoardViewProps) {
 
   const lastMoveCellStyle = (x: number, y: number) => {
     if (!props.lastMove) {
-      return;
+      return {};
     }
     if (
       props.lastMove.boardIndex === props.boardIndex &&
@@ -147,6 +148,20 @@ function BoardView(props: BoardViewProps) {
       props.lastMove.y === y
     ) {
       return {backgroundColor: COLOR_YELLOW};
+    }
+    return {};
+  };
+
+  const suggestedMoveCellStyle = (x: number, y: number) => {
+    if (!props.suggestedMove) {
+      return {};
+    }
+    if (
+      props.suggestedMove.boardIndex === props.boardIndex &&
+      props.suggestedMove.x === x &&
+      props.suggestedMove.y === y
+    ) {
+      return {backgroundColor: COLOR_GREEN};
     }
     return {};
   };
@@ -176,7 +191,12 @@ function BoardView(props: BoardViewProps) {
               key={x}
               style={[styles.cell, cellStyle, borderStyle(x, y)]}
               onPress={() => onPress(x, y)}>
-              <View style={[styles.cellTxtWrapper, lastMoveCellStyle(x, y)]}>
+              <View
+                style={[
+                  styles.cellTxtWrapper,
+                  lastMoveCellStyle(x, y),
+                  suggestedMoveCellStyle(x, y),
+                ]}>
                 <Text style={[styles.cellTxt, cellTxtStyle(x, y)]}>{cell}</Text>
               </View>
             </Pressable>

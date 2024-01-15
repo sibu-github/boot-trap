@@ -24,6 +24,7 @@ function GameBoardView() {
     lastMove,
     winner,
     boardItems,
+    suggestedMove,
   } = useAppSelector(state => state.gameState);
   const dispatch = useAppDispatch();
 
@@ -74,6 +75,7 @@ function GameBoardView() {
               player1Moves={player1Moves}
               player2Moves={player2Moves}
               lastMove={lastMove}
+              suggestedMove={suggestedMove}
               onPress={onClick}
             />
           ))}

@@ -2,9 +2,11 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
   GameStartPayload,
   GameStateState,
+  OnOffMode,
   UpdateMovePayload,
 } from '../definitions';
 import {
+  BoardMove,
   GameMode,
   PlayerNumber,
   PlayerType,
@@ -30,11 +32,13 @@ const initialState: GameStateState = {
   lastMove: undefined,
   winner: undefined,
   boardItems: [],
+  suggestedMove: undefined,
+  scoringMoves: [],
 };
 
 export const computerMoveThunk = (): AppThunk => async (dispatch, getState) => {
   const {gameMode, playerOneType, boardItems} = getState().gameState;
-  const {soundMode} = getState().settings;
+  const {soundMode, showSuggestedMove} = getState().settings;
   const move = findNextMove(boardItems, gameMode);
   const newBoards = makeMove(move, boardItems);
   const newBoardItems = newBoards.map(b => b.items);
@@ -45,6 +49,13 @@ export const computerMoveThunk = (): AppThunk => async (dispatch, getState) => {
     playClickTwoSound();
   }
   await dispatch(updateMove({move, newBoardItems, player}));
+  if (gameMode === 'Practice' || showSuggestedMove === OnOffMode.On) {
+    let suggestedMove: BoardMove | undefined;
+    if (!isGameFinished(newBoardItems)) {
+      suggestedMove = findNextMove(newBoardItems);
+      dispatch(updateSuggestedMove(suggestedMove));
+    }
+  }
 };
 
 const gameStateSlice = createSlice({
@@ -65,6 +76,8 @@ const gameStateSlice = createSlice({
       state.isReady = false;
       state.lastMove = undefined;
       state.winner = undefined;
+      state.suggestedMove = undefined;
+      state.scoringMoves = [];
       state.gamePage = 'Landing';
     },
     startPlay: (state, action: PayloadAction<GameStartPayload>) => {
@@ -82,6 +95,8 @@ const gameStateSlice = createSlice({
       state.lastMove = undefined;
       state.winner = undefined;
       state.boardItems = createEmptyBoardItems();
+      state.suggestedMove = undefined;
+      state.scoringMoves = [];
     },
     updateMove: (state, action: PayloadAction<UpdateMovePayload>) => {
       if (action.payload.player === 'one') {
@@ -97,6 +112,12 @@ const gameStateSlice = createSlice({
       state.currentPlayer = state.currentPlayer === 'one' ? 'two' : 'one';
       state.boardItems = action.payload.newBoardItems;
     },
+    updateSuggestedMove: (
+      state,
+      action: PayloadAction<BoardMove | undefined>,
+    ) => {
+      state.suggestedMove = action.payload;
+    },
   },
 });
 
@@ -107,5 +128,6 @@ export const {
   startPlay,
   newGame,
   updateMove,
+  updateSuggestedMove,
 } = gameStateSlice.actions;
 export default gameStateSlice;

@@ -4,7 +4,7 @@ import {OnOffMode, SettingsState} from '../definitions';
 const initialState: SettingsState = {
   darkMode: OnOffMode.On,
   soundMode: OnOffMode.On,
-  showSuggestedMove: OnOffMode.On,
+  showSuggestedMove: OnOffMode.Off,
 };
 const settingsSlice = createSlice({
   name: 'settingsSlice',

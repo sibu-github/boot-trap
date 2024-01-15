@@ -7,16 +7,24 @@ import {
   COLOR_GREEN,
   COLOR_MAROON,
   COLOR_RED,
+  KALAM_BOLD,
+  KALAM_LIGHT,
   KALAM_REGULAR,
 } from '../utils';
 import {OnOffMode} from '../definitions';
-import {updateDarkMode, updateSoundMode} from '../redux/settings';
+import {
+  updateDarkMode,
+  updateShowSuggestedMove,
+  updateSoundMode,
+} from '../redux/settings';
 import {version as appVersion} from '../package.json';
 
 function Settings() {
   const backgroundColor = useBackgroundColor();
   const textColor = useTextColor();
-  const {darkMode, soundMode} = useAppSelector(state => state.settings);
+  const {darkMode, soundMode, showSuggestedMove} = useAppSelector(
+    state => state.settings,
+  );
   const dispatch = useAppDispatch();
   const toggleDarkMode = () => {
     dispatch(
@@ -30,6 +38,15 @@ function Settings() {
       ),
     );
   };
+
+  const toggleShowSuggestedMove = () => {
+    dispatch(
+      updateShowSuggestedMove(
+        showSuggestedMove === OnOffMode.On ? OnOffMode.Off : OnOffMode.On,
+      ),
+    );
+  };
+
   return (
     <View style={[styles.container, {backgroundColor}]}>
       <View style={styles.labelWrapper}>
@@ -52,6 +69,37 @@ function Settings() {
           onValueChange={toggleSoundMode}
         />
       </View>
+      <View style={styles.labelWrapper}>
+        <Text style={[styles.labelTxt, {color: textColor}]}>
+          Suggested Move
+        </Text>
+        <Switch
+          value={showSuggestedMove === OnOffMode.On}
+          style={styles.switch}
+          thumbColor={
+            showSuggestedMove === OnOffMode.On ? COLOR_GREEN : COLOR_RED
+          }
+          trackColor={{false: COLOR_MAROON, true: COLOR_DARK_GREEN}}
+          onValueChange={toggleShowSuggestedMove}
+        />
+      </View>
+
+      <Text style={[styles.q1, {color: textColor}]}>
+        What is Suggested Move?
+      </Text>
+      <Text style={[styles.para1, {color: textColor}]}>
+        Computer tries to find out the best possible move depending on the board
+        situation. Suggested Move is always shown in "Practice" mode. In
+        "Challenge" mode, it can be toggled on or off.
+      </Text>
+      <Text style={[styles.q2, {color: textColor}]}>
+        How is score calculated?
+      </Text>
+      <Text style={[styles.para1, {color: textColor}]}>
+        Score is the total number of P-position moves you have played. To know
+        more about P-position move, please go through the links given in
+        "References".
+      </Text>
       <View style={styles.versionWrapper}>
         <Text style={[styles.versionTxt, {color: textColor}]}>
           Version {appVersion}
@@ -74,7 +122,7 @@ const styles = StyleSheet.create({
   labelTxt: {
     fontFamily: KALAM_REGULAR,
     fontSize: 24,
-    width: 160,
+    width: 180,
   },
   switch: {},
   versionWrapper: {
@@ -85,6 +133,19 @@ const styles = StyleSheet.create({
     fontFamily: KALAM_REGULAR,
     fontSize: 16,
     alignSelf: 'center',
+  },
+  q1: {
+    fontFamily: KALAM_BOLD,
+    fontSize: 20,
+    marginTop: 40,
+  },
+  para1: {
+    fontFamily: KALAM_LIGHT,
+    fontSize: 14,
+  },
+  q2: {
+    fontFamily: KALAM_BOLD,
+    fontSize: 20,
   },
 });
 

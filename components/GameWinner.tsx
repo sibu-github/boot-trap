@@ -2,7 +2,12 @@ import React, {useCallback, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {COLOR_BLACK, COLOR_OVERLAY_DARK, KALAM_REGULAR} from '../utils';
+import {
+  COLOR_BLACK,
+  COLOR_OVERLAY_DARK,
+  KALAM_BOLD,
+  KALAM_REGULAR,
+} from '../utils';
 import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
 import {PlayerType} from '../lib';
 import {playGameOverSound, playGameWinSound} from '../utils/sound';
@@ -10,7 +15,9 @@ import Button from './Button';
 import {newGame, resetGame} from '../redux/gameState';
 
 function GameWinner() {
-  const {winner, playerOneType} = useAppSelector(state => state.gameState);
+  const {winner, playerOneType, scoringMoves} = useAppSelector(
+    state => state.gameState,
+  );
   const {soundMode} = useAppSelector(state => state.settings);
   const dispatch = useAppDispatch();
 
@@ -57,6 +64,7 @@ function GameWinner() {
           <Text style={styles.txtMsg}>Sorry!! You've lost.</Text>
         </>
       )}
+      <Text style={styles.scoreTxt}>Score: {scoringMoves.length}</Text>
       <View style={styles.btnWrapper}>
         <Button
           text="Play Again"
@@ -85,6 +93,11 @@ const styles = StyleSheet.create({
   txtMsg: {
     fontFamily: KALAM_REGULAR,
     fontSize: 24,
+    color: COLOR_BLACK,
+  },
+  scoreTxt: {
+    fontFamily: KALAM_BOLD,
+    fontSize: 20,
     color: COLOR_BLACK,
   },
   btnWrapper: {

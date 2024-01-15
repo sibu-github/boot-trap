@@ -7,8 +7,13 @@ import {playClickOneSound} from '../utils/sound';
 import GameMoves from './GameMoves';
 import BoardView from './BoardView';
 import PlayerInfo from './PlayerInfo';
-import {Board, BoardMove, isUserMove, makeMove} from '../lib';
-import {computerMoveThunk, newGame, updateMove} from '../redux/gameState';
+import {Board, BoardMove, isPPositionMove, isUserMove, makeMove} from '../lib';
+import {
+  computerMoveThunk,
+  newGame,
+  updateMove,
+  updateScoringMove,
+} from '../redux/gameState';
 import GameWinner from './GameWinner';
 
 function GameBoardView() {
@@ -56,6 +61,9 @@ function GameBoardView() {
     const newBoards = makeMove(move, boardItems);
     const newBoardItems = newBoards.map(b => b.items);
     dispatch(updateMove({move, newBoardItems, player: currentPlayer}));
+    if (isPPositionMove(newBoards)) {
+      dispatch(updateScoringMove(move));
+    }
   };
 
   return (
@@ -63,7 +71,7 @@ function GameBoardView() {
       <Text style={[styles.avoidTxt, {color: textColor}]}>
         Avoid making 3"X" in a line
       </Text>
-      <PlayerInfo currentPlayer={currentPlayer} />
+      <PlayerInfo />
       <View style={styles.innerContainer}>
         <GameMoves player1Moves={player1Moves} player2Moves={player2Moves} />
         <View style={styles.boardContainer}>

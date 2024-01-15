@@ -1,22 +1,22 @@
 import React from 'react';
 import {StyleSheet, Text, TextStyle, View} from 'react-native';
 import {useAppSelector} from '../redux/useTypeSelectorHook';
-import {PlayerNumber} from '../definitions';
 import {PlayerType} from '../lib';
 import {
+  COLOR_GREEN,
   COLOR_YELLOW,
+  KALAM_LIGHT,
   KALAM_REGULAR,
   PLAYER_1_COLOR,
   PLAYER_2_COLOR,
 } from '../utils';
 import {StyleProp} from 'react-native';
+import {useShowSuggestedMove, useTextColor} from '../hooks';
 
-type PlayerProps = {
-  currentPlayer: PlayerNumber;
-};
-
-function PlayerInfo(props: PlayerProps) {
-  const {playerOneType, playerTwoType} = useAppSelector(
+function PlayerInfo() {
+  const textColor = useTextColor();
+  const suggestionMode = useShowSuggestedMove();
+  const {currentPlayer, playerOneType, playerTwoType} = useAppSelector(
     state => state.gameState,
   );
 
@@ -25,17 +25,24 @@ function PlayerInfo(props: PlayerProps) {
     borderColor: COLOR_YELLOW,
   };
   const playerOneStyle: StyleProp<TextStyle> =
-    props.currentPlayer === 'one' ? underlineStyle : {};
+    currentPlayer === 'one' ? underlineStyle : {};
   const playerTwoStyle: StyleProp<TextStyle> =
-    props.currentPlayer === 'two' ? underlineStyle : {};
+    currentPlayer === 'two' ? underlineStyle : {};
   return (
-    <View style={styles.container}>
-      <Text style={[styles.player1, playerOneStyle]}>
-        Player 1: {playerOneType === PlayerType.Human ? 'You' : 'Computer'}
-      </Text>
-      <Text style={[styles.player2, playerTwoStyle]}>
-        Player 2: {playerTwoType === PlayerType.Human ? 'You' : 'Computer'}
-      </Text>
+    <View>
+      <View style={styles.container}>
+        <Text style={[styles.player1, playerOneStyle]}>
+          Player 1: {playerOneType === PlayerType.Human ? 'You' : 'Computer'}
+        </Text>
+        <Text style={[styles.player2, playerTwoStyle]}>
+          Player 2: {playerTwoType === PlayerType.Human ? 'You' : 'Computer'}
+        </Text>
+      </View>
+      {suggestionMode && (
+        <Text style={[styles.suggestedMoveTxt, {color: textColor}]}>
+          Suggested moves are shown in <View style={styles.greenBox} />
+        </Text>
+      )}
     </View>
   );
 }
@@ -44,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingBottom: 10,
+    paddingBottom: 2,
   },
   player1: {
     fontFamily: KALAM_REGULAR,
@@ -55,6 +62,16 @@ const styles = StyleSheet.create({
     fontFamily: KALAM_REGULAR,
     fontSize: 14,
     color: PLAYER_2_COLOR,
+  },
+  suggestedMoveTxt: {
+    fontFamily: KALAM_LIGHT,
+    fontSize: 10,
+    alignSelf: 'center',
+  },
+  greenBox: {
+    width: 8,
+    height: 8,
+    backgroundColor: COLOR_GREEN,
   },
 });
 

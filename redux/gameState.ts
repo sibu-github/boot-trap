@@ -39,6 +39,7 @@ const initialState: GameStateState = {
 export const computerMoveThunk = (): AppThunk => async (dispatch, getState) => {
   const {gameMode, playerOneType, boardItems} = getState().gameState;
   const {soundMode, showSuggestedMove} = getState().settings;
+  dispatch(updateSuggestedMove(undefined));
   const move = findNextMove(boardItems, gameMode);
   const newBoards = makeMove(move, boardItems);
   const newBoardItems = newBoards.map(b => b.items);
@@ -53,8 +54,8 @@ export const computerMoveThunk = (): AppThunk => async (dispatch, getState) => {
     let suggestedMove: BoardMove | undefined;
     if (!isGameFinished(newBoardItems)) {
       suggestedMove = findNextMove(newBoardItems);
-      dispatch(updateSuggestedMove(suggestedMove));
     }
+    dispatch(updateSuggestedMove(suggestedMove));
   }
 };
 
@@ -118,6 +119,9 @@ const gameStateSlice = createSlice({
     ) => {
       state.suggestedMove = action.payload;
     },
+    updateScoringMove: (state, action: PayloadAction<BoardMove>) => {
+      state.scoringMoves.push(action.payload);
+    },
   },
 });
 
@@ -129,5 +133,6 @@ export const {
   newGame,
   updateMove,
   updateSuggestedMove,
+  updateScoringMove,
 } = gameStateSlice.actions;
 export default gameStateSlice;

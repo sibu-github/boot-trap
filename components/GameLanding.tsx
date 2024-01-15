@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {
   COLOR_BLACK,
@@ -10,32 +10,21 @@ import {
   navigateTo,
 } from '../utils';
 import Button from './Button';
-import {GameMode} from '../definitions';
-import {useFocusEffect} from '@react-navigation/native';
-import {useAppDispatch} from '../redux/useTypeSelectorHook';
-import {startPlay} from '../redux/gameState';
+import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
+import {setGameMode, setRulesUnderstood, startPlay} from '../redux/gameState';
 import {PlayerType} from '../lib';
 
 const GAME_LANDING_IMAGE = '../images/game_landing.png';
 
 function GameLanding() {
-  const [understood, setUserstood] = useState(false);
-  const [gameMode, setGameMode] = useState<GameMode | undefined>();
+  const {gameMode, rulesUnderstood} = useAppSelector(state => state.gameState);
   const dispatch = useAppDispatch();
 
-  useFocusEffect(
-    useCallback(() => {
-      setUserstood(false);
-      setGameMode(undefined);
-    }, []),
-  );
-
   const onShowMeRules = () => navigateTo('Rules');
-  const onUnderstood = () => setUserstood(true);
-  const onPracticeMode = () => setGameMode('Practice');
-  const onChallengeMode = () => setGameMode('Challenge');
+  const onUnderstood = () => dispatch(setRulesUnderstood());
+  const onPracticeMode = () => dispatch(setGameMode('Practice'));
+  const onChallengeMode = () => dispatch(setGameMode('Challenge'));
   const onPlayAsPlayer1 = () => {
-    console.log('play as player 1');
     if (!gameMode) {
       return;
     }
@@ -48,7 +37,6 @@ function GameLanding() {
     );
   };
   const onPlayAsPlayer2 = () => {
-    console.log('play as player 2');
     if (!gameMode) {
       return;
     }
@@ -65,16 +53,19 @@ function GameLanding() {
     <View style={styles.container}>
       <Image source={require(GAME_LANDING_IMAGE)} style={styles.img} />
       <Text style={styles.didYouUnderstand}>Did you understand the rules?</Text>
-      <Text style={styles.notATicTacToe}>This is not a Tic-Tac-Toe</Text>
+      <Text style={styles.revisitRules}>
+        Please revisit Rules if you have doubt.
+      </Text>
+      <Text style={styles.notATicTacToe}>This is not Tic-Tac-Toe</Text>
       <View style={styles.btnWrapper}>
-        {!understood && (
+        {!rulesUnderstood && (
           <>
             <Button text="Show Me Rules" onClick={onShowMeRules} />
             <View style={styles.blank} />
             <Button text="Yes, I understood Rules" onClick={onUnderstood} />
           </>
         )}
-        {understood && !gameMode ? (
+        {rulesUnderstood && !gameMode ? (
           <>
             <Button text="Practice Mode" onClick={onPracticeMode} />
             <View style={styles.blank} />
@@ -83,7 +74,7 @@ function GameLanding() {
         ) : (
           <></>
         )}
-        {understood && gameMode && (
+        {rulesUnderstood && gameMode && (
           <>
             <Button
               text="Play As Player 1"
@@ -124,12 +115,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
   },
+  revisitRules: {
+    color: COLOR_BLACK,
+    fontFamily: KALAM_REGULAR,
+    fontSize: 14,
+    position: 'absolute',
+    top: 30,
+  },
   notATicTacToe: {
     color: COLOR_BLACK,
     fontFamily: KALAM_BOLD,
     fontSize: 24,
     position: 'absolute',
-    top: 50,
+    top: 90,
     textDecorationLine: 'underline',
     width: 200,
     textAlign: 'center',

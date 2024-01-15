@@ -22,7 +22,8 @@ type GamePage = 'Landing' | 'GameBoard';
 export interface GameStateState {
   gamePage: GamePage;
   isReady: boolean;
-  gameMode: GameMode;
+  rulesUnderstood: boolean;
+  gameMode: GameMode | undefined;
   playerOneType: PlayerType;
   playerTwoType: PlayerType;
   currentPlayer: PlayerNumber;

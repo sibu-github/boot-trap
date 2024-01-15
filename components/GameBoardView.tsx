@@ -63,7 +63,6 @@ function GameBoardView() {
         Avoid making 3"X" in a line
       </Text>
       <PlayerInfo currentPlayer={currentPlayer} />
-      <Text style={{color: textColor}}>Winner is: {winner}</Text>
       <View style={styles.innerContainer}>
         <GameMoves player1Moves={player1Moves} player2Moves={player2Moves} />
         <View style={styles.boardContainer}>

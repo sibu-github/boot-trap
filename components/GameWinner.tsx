@@ -7,7 +7,7 @@ import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
 import {PlayerType} from '../lib';
 import {playGameOverSound, playGameWinSound} from '../utils/sound';
 import Button from './Button';
-import {newGame} from '../redux/gameState';
+import {newGame, resetGame} from '../redux/gameState';
 
 function GameWinner() {
   const {winner, playerOneType} = useAppSelector(state => state.gameState);
@@ -34,11 +34,8 @@ function GameWinner() {
     }
   }, [isGameWin, soundMode, winner]);
 
-  const playAgain = () => {
-    dispatch(newGame());
-  };
-
-  const resetOptions = () => {};
+  const playAgain = () => dispatch(newGame());
+  const resetOptions = () => dispatch(resetGame());
 
   if (!winner) {
     return;

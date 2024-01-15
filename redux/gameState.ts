@@ -5,6 +5,7 @@ import {
   UpdateMovePayload,
 } from '../definitions';
 import {
+  GameMode,
   PlayerNumber,
   PlayerType,
   createEmptyBoardItems,
@@ -18,8 +19,9 @@ import {playClickTwoSound} from '../utils/sound';
 
 const initialState: GameStateState = {
   gamePage: 'Landing',
+  rulesUnderstood: false,
   isReady: false,
-  gameMode: 'Challenge',
+  gameMode: undefined,
   playerOneType: PlayerType.Human,
   playerTwoType: PlayerType.Computer,
   currentPlayer: 'one',
@@ -49,6 +51,22 @@ const gameStateSlice = createSlice({
   name: 'gameStateSlice',
   initialState,
   reducers: {
+    setRulesUnderstood: state => {
+      state.rulesUnderstood = true;
+      state.gameMode = undefined;
+      state.isReady = false;
+    },
+    setGameMode: (state, action: PayloadAction<GameMode>) => {
+      state.gameMode = action.payload;
+      state.isReady = false;
+    },
+    resetGame: state => {
+      state.gameMode = undefined;
+      state.isReady = false;
+      state.lastMove = undefined;
+      state.winner = undefined;
+      state.gamePage = 'Landing';
+    },
     startPlay: (state, action: PayloadAction<GameStartPayload>) => {
       state.gamePage = 'GameBoard';
       state.isReady = false;
@@ -82,5 +100,12 @@ const gameStateSlice = createSlice({
   },
 });
 
-export const {startPlay, newGame, updateMove} = gameStateSlice.actions;
+export const {
+  setRulesUnderstood,
+  setGameMode,
+  resetGame,
+  startPlay,
+  newGame,
+  updateMove,
+} = gameStateSlice.actions;
 export default gameStateSlice;

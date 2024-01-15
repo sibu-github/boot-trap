@@ -3,11 +3,10 @@ import {StyleSheet, Text, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useBackgroundColor, useTextColor} from '../hooks';
-import {Board, BoardMove} from '../lib';
+import {Board, BoardMove, PlayerNumber} from '../lib';
 import BoardView from './BoardView';
 import {COLOR_GREEN, COLOR_RED, KALAM_LIGHT} from '../utils';
 import GameMoves from './GameMoves';
-import {PlayerNumber} from '../definitions';
 
 const allMoves: {move: BoardMove; player: PlayerNumber}[] = [
   {move: {boardIndex: 0, x: 0, y: 0}, player: 'one'},
@@ -127,7 +126,7 @@ function ExampleBoard() {
               lastMove={lastMoveOne}
             />
             <Text style={[styles.descTxt, {color: textColor}]}>
-              Board 3: Incorrect move on I2. You would loose the game as it
+              Board 3: Incorrect move on J2. You would loose the game as it
               makes 3"X" in a line on last board.
             </Text>
           </View>

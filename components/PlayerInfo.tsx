@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
   },
   player1: {
     fontFamily: KALAM_REGULAR,
-    fontSize: 14,
+    fontSize: 16,
     color: PLAYER_1_COLOR,
   },
   player2: {
     fontFamily: KALAM_REGULAR,
-    fontSize: 14,
+    fontSize: 16,
     color: PLAYER_2_COLOR,
   },
   suggestedMoveTxt: {

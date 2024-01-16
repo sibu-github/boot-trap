@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {captureScreen} from 'react-native-view-shot';
 import Share from 'react-native-share';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -8,7 +8,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   COLOR_BLACK,
   COLOR_OVERLAY_DARK,
-  COLOR_YELLOW,
   KALAM_BOLD,
   KALAM_REGULAR,
 } from '../utils';
@@ -91,13 +90,15 @@ function GameWinner() {
       )}
       <Text style={styles.scoreTxt}>Score: {scoringMoves.length}</Text>
       {isGameWin() && (
-        <AntDesign
-          name="sharealt"
-          size={40}
-          color={COLOR_BLACK}
-          style={styles.shareBtn}
-          onPress={onShare}
-        />
+        <Pressable style={styles.shareBtn} onPress={onShare}>
+          <Text style={styles.shareBtnTxt}>Share your success</Text>
+          <AntDesign
+            name="sharealt"
+            size={20}
+            color={COLOR_BLACK}
+            onPress={onShare}
+          />
+        </Pressable>
       )}
       <View style={styles.btnWrapper}>
         <Button
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     height: 250,
     width: '100%',
     position: 'absolute',
-    bottom: 3,
+    bottom: 0,
     alignItems: 'center',
   },
   gameInfoWrapper: {
@@ -155,15 +156,18 @@ const styles = StyleSheet.create({
     width: 125,
   },
   resetBtn: {
-    marginTop: 5,
     width: 125,
   },
   shareBtn: {
-    borderWidth: 1,
-    borderRadius: 30,
-    borderColor: COLOR_BLACK,
-    padding: 5,
-    backgroundColor: COLOR_YELLOW,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  shareBtnTxt: {
+    fontFamily: KALAM_REGULAR,
+    fontSize: 20,
+    color: COLOR_BLACK,
+    textDecorationLine: 'underline',
   },
 });
 

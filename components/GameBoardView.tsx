@@ -31,6 +31,7 @@ function GameBoardView() {
     winner,
     boardItems,
     suggestedMove,
+    scoringMoves,
   } = useAppSelector(state => state.gameState);
   const dispatch = useAppDispatch();
 
@@ -87,7 +88,12 @@ function GameBoardView() {
       </Text>
       <PlayerInfo />
       <View style={styles.innerContainer}>
-        <GameMoves player1Moves={player1Moves} player2Moves={player2Moves} />
+        <GameMoves
+          player1Moves={player1Moves}
+          player2Moves={player2Moves}
+          scoringMoves={scoringMoves}
+          winner={winner}
+        />
         <View style={styles.boardContainer}>
           {boardItems.map((items, idx) => (
             <BoardView

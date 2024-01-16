@@ -73,6 +73,8 @@ export type BoardViewProps = {
 export type GameMovesProps = {
   player1Moves: BoardMove[];
   player2Moves: BoardMove[];
+  scoringMoves?: BoardMove[];
+  winner?: PlayerNumber | undefined;
   smallBoard?: boolean;
   flipTextColor?: boolean;
 };

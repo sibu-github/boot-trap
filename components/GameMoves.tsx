@@ -4,6 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useTextColor} from '../hooks';
 import {
   COLOR_GREY,
+  COLOR_YELLOW,
   KALAM_BOLD,
   PLAYER_1_COLOR,
   PLAYER_2_COLOR,
@@ -12,17 +13,33 @@ import {
 import {BoardMove} from '../lib';
 import DotView from './DotView';
 
-function getAllMoves(player1Moves: BoardMove[], player2Moves: BoardMove[]) {
+function isScoringMove(move: BoardMove, props: GameMovesProps) {
+  const {scoringMoves, winner} = props;
+  if (!winner) {
+    return false;
+  }
+  return (
+    !!scoringMoves &&
+    scoringMoves.some(
+      m => m.boardIndex === move.boardIndex && m.x === move.x && m.y === move.y,
+    )
+  );
+}
+
+function getAllMoves(props: GameMovesProps) {
+  const {player1Moves, player2Moves} = props;
   const allMoves: {move: BoardMove; color: string}[] = [];
   let i = 0;
   while (i < player1Moves.length) {
     {
       const {boardIndex, x, y} = player1Moves[i];
-      allMoves.push({move: {boardIndex, x, y}, color: PLAYER_1_COLOR});
+      const color = PLAYER_1_COLOR;
+      allMoves.push({move: {boardIndex, x, y}, color});
     }
     if (i < player2Moves.length) {
       const {boardIndex, x, y} = player2Moves[i];
-      allMoves.push({move: {boardIndex, x, y}, color: PLAYER_2_COLOR});
+      const color = PLAYER_2_COLOR;
+      allMoves.push({move: {boardIndex, x, y}, color});
     }
     i++;
   }
@@ -60,6 +77,15 @@ function GameMoves(props: GameMovesProps) {
     color: textColor,
   };
 
+  const scoringMoveStyle = (move: BoardMove) => {
+    return isScoringMove(move, props)
+      ? {
+          borderWidth: 1,
+          borderColor: COLOR_YELLOW,
+        }
+      : {};
+  };
+
   return (
     <View style={[styles.container, containerStyle]}>
       <Text style={[styles.movesHeader, headerStyle, {color: textColor}]}>
@@ -75,8 +101,10 @@ function GameMoves(props: GameMovesProps) {
         <View style={[playerColorBox, {backgroundColor: PLAYER_2_COLOR}]} />
       </View>
       <View style={styles.blankLine} />
-      {getAllMoves(props.player1Moves, props.player2Moves).map((item, idx) => (
-        <View key={idx} style={styles.movesTxtWrapper}>
+      {getAllMoves(props).map((item, idx) => (
+        <View
+          key={idx}
+          style={[styles.movesTxtWrapper, scoringMoveStyle(item.move)]}>
           <DotView backgroundColor={item.color} />
           <Text style={[styles.movesTxt, movesTxtStyle, {color: item.color}]}>
             {translateBoardMove(item.move)}
@@ -111,7 +139,9 @@ const styles = StyleSheet.create({
   },
   movesTxtWrapper: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    width: 50,
   },
   movesTxt: {
     fontFamily: KALAM_BOLD,

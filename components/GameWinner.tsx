@@ -72,7 +72,7 @@ function GameWinner() {
           style={styles.playAgainBtn}
         />
         <Button
-          text="Reset Options"
+          text="Main Menu"
           onClick={resetOptions}
           style={styles.resetBtn}
         />

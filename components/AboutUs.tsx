@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, Linking, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -23,6 +23,7 @@ function AboutUs() {
       <AboutUsSection />
       <References />
       <Donate />
+      <view style={styles.blank} />
     </ScrollView>
   );
 }
@@ -77,9 +78,14 @@ function References() {
   ];
   const txtColor = useTextColor();
 
-  const onPress = (txt: string) => {
+  const onPress = async (txt: string) => {
+    const canOpen = await Linking.canOpenURL(txt);
+    if (canOpen) {
+      await Linking.openURL(txt);
+      return;
+    }
     Clipboard.setString(txt);
-    showMessage('Copied!');
+    showMessage("Can't open URL. Copied!");
   };
 
   return (
@@ -137,6 +143,9 @@ const styles = StyleSheet.create({
     fontFamily: KALAM_REGULAR,
     fontSize: 18,
     marginRight: 5,
+  },
+  blank: {
+    height: 50,
   },
 });
 

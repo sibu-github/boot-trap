@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {BackHandler, StyleSheet, Text, View} from 'react-native';
 import {KALAM_LIGHT} from '../utils';
 import {useSoundMode, useTextColor} from '../hooks';
 import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
@@ -11,6 +11,7 @@ import {Board, BoardMove, isPPositionMove, isUserMove, makeMove} from '../lib';
 import {
   computerMoveThunk,
   newGame,
+  resetGame,
   updateMove,
   updateScoringMove,
 } from '../redux/gameState';
@@ -32,6 +33,19 @@ function GameBoardView() {
     suggestedMove,
   } = useAppSelector(state => state.gameState);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const backAction = () => {
+      dispatch(resetGame());
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const startNewGame = () => {
     dispatch(newGame());

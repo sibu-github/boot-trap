@@ -89,8 +89,7 @@ function Settings() {
       </Text>
       <Text style={[styles.para1, {color: textColor}]}>
         Computer tries to find out the best possible move depending on the board
-        situation. Suggested Move is always shown in "Practice" mode. In
-        "Challenge" mode, it can be toggled on or off.
+        situation. Suggested move may not be a P-position move.
       </Text>
       <Text style={[styles.q2, {color: textColor}]}>
         How is score calculated?

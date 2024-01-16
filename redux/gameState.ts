@@ -50,7 +50,7 @@ export const computerMoveThunk = (): AppThunk => async (dispatch, getState) => {
     playClickTwoSound();
   }
   await dispatch(updateMove({move, newBoardItems, player}));
-  if (gameMode === 'Practice' || showSuggestedMove === OnOffMode.On) {
+  if (showSuggestedMove === OnOffMode.On) {
     let suggestedMove: BoardMove | undefined;
     if (!isGameFinished(newBoardItems)) {
       suggestedMove = findNextMove(newBoardItems);

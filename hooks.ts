@@ -23,6 +23,5 @@ export function useSoundMode() {
 
 export function useShowSuggestedMove() {
   const {showSuggestedMove} = useAppSelector(state => state.settings);
-  const {gameMode} = useAppSelector(state => state.gameState);
-  return gameMode === 'Practice' || showSuggestedMove === OnOffMode.On;
+  return showSuggestedMove === OnOffMode.On;
 }

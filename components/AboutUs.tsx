@@ -1,5 +1,13 @@
 import React from 'react';
-import {Image, Linking, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Linking,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -13,6 +21,7 @@ import {
 import {useBackgroundColor, useTextColor} from '../hooks';
 
 const QR_CODE_PATH = '../images/qr_code.png';
+const UPI_URL = `upi://pay?cu=INR&pa=${encodeURIComponent(UPI_ID)}&tr=123123`;
 
 function AboutUs() {
   const bgColor = useBackgroundColor();
@@ -23,7 +32,7 @@ function AboutUs() {
       <AboutUsSection />
       <References />
       <Donate />
-      <view style={styles.blank} />
+      <View style={styles.blank} />
     </ScrollView>
   );
 }
@@ -31,23 +40,34 @@ function AboutUs() {
 function Donate() {
   const txtColor = useTextColor();
 
-  const onPress = () => {
+  const onCopy = () => {
     Clipboard.setString(UPI_ID);
     showMessage('Copied!');
+  };
+
+  const onPress = async () => {
+    const canOpen = await Linking.canOpenURL(UPI_URL);
+    if (canOpen) {
+      await Linking.openURL(UPI_URL);
+      return;
+    }
+    showMessage('Could not open UPI app!');
   };
 
   return (
     <>
       <Text style={[styles.headerTxt, {color: txtColor}]}> Donate</Text>
       <View style={styles.donateWrapper}>
-        <Image source={require(QR_CODE_PATH)} style={styles.qrCode} />
+        <Pressable onPress={onPress}>
+          <Image source={require(QR_CODE_PATH)} style={styles.qrCode} />
+        </Pressable>
         <View style={styles.upiIdWrapper}>
           <Text style={[styles.upiIdTxt, {color: txtColor}]}>{UPI_ID}</Text>
           <Ionicons
             name="copy-outline"
             size={18}
             color={txtColor}
-            onPress={onPress}
+            onPress={onCopy}
           />
         </View>
       </View>

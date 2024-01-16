@@ -13,12 +13,14 @@ import {PlayerType} from '../lib';
 import {playGameOverSound, playGameWinSound} from '../utils/sound';
 import Button from './Button';
 import {newGame, resetGame} from '../redux/gameState';
+import {useShowSuggestedMove, useSoundMode} from '../hooks';
 
 function GameWinner() {
-  const {winner, playerOneType, scoringMoves} = useAppSelector(
+  const {gameMode, winner, playerOneType, scoringMoves} = useAppSelector(
     state => state.gameState,
   );
-  const {soundMode} = useAppSelector(state => state.settings);
+  const soundMode = useSoundMode();
+  const suggestionMode = useShowSuggestedMove();
   const dispatch = useAppDispatch();
 
   const isGameWin = useCallback(() => {
@@ -49,6 +51,12 @@ function GameWinner() {
   }
   return (
     <View style={styles.container}>
+      <View style={styles.gameInfoWrapper}>
+        <Text style={styles.gameInfoLabel}>Mode: {gameMode}</Text>
+        <Text style={styles.gameInfoLabel}>
+          Suggestion: {suggestionMode ? 'On' : 'Off'}
+        </Text>
+      </View>
       {isGameWin() ? (
         <>
           <MaterialCommunityIcons
@@ -89,6 +97,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 3,
     alignItems: 'center',
+  },
+  gameInfoWrapper: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-around',
+  },
+  gameInfoLabel: {
+    fontFamily: KALAM_REGULAR,
+    fontSize: 14,
+    color: COLOR_BLACK,
   },
   txtMsg: {
     fontFamily: KALAM_REGULAR,

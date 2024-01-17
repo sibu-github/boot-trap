@@ -3,10 +3,8 @@ import {StyleSheet, Switch, Text, View} from 'react-native';
 import {useBackgroundColor, useTextColor} from '../hooks';
 import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
 import {
-  COLOR_DARK_GREEN,
-  COLOR_GREEN,
-  COLOR_MAROON,
-  COLOR_RED,
+  COLOR_GREY,
+  COLOR_YELLOW,
   KALAM_BOLD,
   KALAM_LIGHT,
   KALAM_REGULAR,
@@ -54,8 +52,8 @@ function Settings() {
         <Switch
           value={darkMode === OnOffMode.On}
           style={styles.switch}
-          thumbColor={darkMode === OnOffMode.On ? COLOR_GREEN : COLOR_RED}
-          trackColor={{false: COLOR_MAROON, true: COLOR_DARK_GREEN}}
+          thumbColor={darkMode === OnOffMode.On ? COLOR_YELLOW : COLOR_GREY}
+          trackColor={{false: COLOR_GREY, true: COLOR_YELLOW}}
           onValueChange={toggleDarkMode}
         />
       </View>
@@ -64,8 +62,8 @@ function Settings() {
         <Switch
           value={soundMode === OnOffMode.On}
           style={styles.switch}
-          thumbColor={soundMode === OnOffMode.On ? COLOR_GREEN : COLOR_RED}
-          trackColor={{false: COLOR_MAROON, true: COLOR_DARK_GREEN}}
+          thumbColor={soundMode === OnOffMode.On ? COLOR_YELLOW : COLOR_GREY}
+          trackColor={{false: COLOR_GREY, true: COLOR_YELLOW}}
           onValueChange={toggleSoundMode}
         />
       </View>
@@ -77,9 +75,9 @@ function Settings() {
           value={showSuggestedMove === OnOffMode.On}
           style={styles.switch}
           thumbColor={
-            showSuggestedMove === OnOffMode.On ? COLOR_GREEN : COLOR_RED
+            showSuggestedMove === OnOffMode.On ? COLOR_YELLOW : COLOR_GREY
           }
-          trackColor={{false: COLOR_MAROON, true: COLOR_DARK_GREEN}}
+          trackColor={{false: COLOR_GREY, true: COLOR_YELLOW}}
           onValueChange={toggleShowSuggestedMove}
         />
       </View>
@@ -88,15 +86,15 @@ function Settings() {
         What is Suggested Move?
       </Text>
       <Text style={[styles.para1, {color: textColor}]}>
-        Computer tries to find out the best possible move depending on the board
-        situation. Suggested move may not be a P-position move.
+        The computer tries to find out the best possible move depending on the
+        board situation. The suggested move may not be a P-position move.
       </Text>
       <Text style={[styles.q2, {color: textColor}]}>
         How is score calculated?
       </Text>
       <Text style={[styles.para1, {color: textColor}]}>
-        Score is the total number of P-position moves you have played. To know
-        more about P-position move, please go through the links given in
+        The score is the total number of P-position moves that you have played.
+        To learn more about P-positions, please go to the links given in
         "References".
       </Text>
       <View style={styles.versionWrapper}>

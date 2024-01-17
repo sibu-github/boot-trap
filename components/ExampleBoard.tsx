@@ -59,7 +59,7 @@ function ExampleBoard() {
       boardFour.markAtPos(item.move.x, item.move.y);
     }
   });
-  const lastMoveOne: BoardMove = {boardIndex: 2, x: 1, y: 2};
+  const lastMoveOne: BoardMove = {boardIndex: 2, x: 2, y: 1};
   const lastMoveTwo: BoardMove = {boardIndex: 2, x: 0, y: 0};
   const board3Player1Moves = playerMoves(2, 'one');
 
@@ -126,7 +126,7 @@ function ExampleBoard() {
               lastMove={lastMoveOne}
             />
             <Text style={[styles.descTxt, {color: textColor}]}>
-              Board 3: Incorrect move on J2. You would loose the game as it
+              Board 3: Incorrect move on H3. You would loose the game as it
               makes 3"X" in a line on last board.
             </Text>
           </View>

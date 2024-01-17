@@ -12,8 +12,6 @@ if [[ $1 = "--release" ]]; then
     echo $packageName
     echo $packageVersion
     output=~/Downloads/$packageName-v$packageVersion.aab
-    rm -rf ./android/app/src/main/res/drawable-*
-    rm -rf ./android/app/src/main/res/raw
     cd android
     ./gradlew clean
     cd ..

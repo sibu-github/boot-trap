@@ -5,7 +5,7 @@ import {playClickOneSound} from '../utils/sound';
 import {useSoundMode} from '../hooks';
 
 type ButtonProps = {
-  text: string;
+  text: React.ReactNode;
   onClick: () => void;
   style?: {[k: string]: any};
   textStyle?: {[k: string]: any};

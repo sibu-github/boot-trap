@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {useBackgroundColor} from '../hooks';
-import GameLanding from './GameLanding';
+import GameLanding from './gameLanding/GameLanding';
 import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
 import GameBoardView from './GameBoardView';
 import {useFocusEffect} from '@react-navigation/native';

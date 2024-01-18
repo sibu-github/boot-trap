@@ -2,6 +2,7 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
   GameStartPayload,
   GameStateState,
+  GameType,
   UpdateMovePayload,
 } from '../definitions';
 import {
@@ -21,7 +22,7 @@ import {isSuggestion} from '../hooks';
 
 const initialState: GameStateState = {
   gameType: undefined,
-  gamePage: undefined,
+  gamePage: 'Landing',
   playerNames: [],
   rulesUnderstood: false,
   isReady: false,
@@ -71,6 +72,14 @@ const gameStateSlice = createSlice({
     setRulesUnderstood: state => {
       state.rulesUnderstood = true;
       state.gameMode = undefined;
+      state.isReady = false;
+    },
+    setGameType: (state, action: PayloadAction<GameType>) => {
+      state.gameType = action.payload;
+      state.gameMode = undefined;
+      state.playerOneType = undefined;
+      state.playerTwoType = undefined;
+      state.playerNames = [];
       state.isReady = false;
     },
     setGameMode: (state, action: PayloadAction<GameMode>) => {
@@ -139,6 +148,7 @@ const gameStateSlice = createSlice({
 
 export const {
   setRulesUnderstood,
+  setGameType,
   setGameMode,
   resetGame,
   startPlay,

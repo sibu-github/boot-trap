@@ -1,4 +1,4 @@
-import {OnOffMode} from './definitions';
+import {GameType, OnOffMode} from './definitions';
 import {useAppSelector} from './redux/useTypeSelectorHook';
 import {COLOR_BLACK, COLOR_WHITE} from './utils';
 
@@ -21,7 +21,20 @@ export function useSoundMode() {
   return soundMode === OnOffMode.On;
 }
 
+export function isSuggestion(
+  gameType: GameType | undefined,
+  showSuggestedMove: OnOffMode,
+) {
+  return gameType === 'VsComputer' && showSuggestedMove === OnOffMode.On;
+}
+
 export function useShowSuggestedMove() {
   const {showSuggestedMove} = useAppSelector(state => state.settings);
-  return showSuggestedMove === OnOffMode.On;
+  const {gameType} = useAppSelector(state => state.gameState);
+  return isSuggestion(gameType, showSuggestedMove);
+}
+
+export function useShowBoardValue() {
+  const {showBoardValue} = useAppSelector(state => state.settings);
+  return showBoardValue === OnOffMode.On;
 }

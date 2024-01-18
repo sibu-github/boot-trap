@@ -17,17 +17,21 @@ export interface SettingsState {
   darkMode: OnOffMode;
   soundMode: OnOffMode;
   showSuggestedMove: OnOffMode;
+  showBoardValue: OnOffMode;
 }
 
-type GamePage = 'Landing' | 'GameBoard';
-export interface GameStateState {
-  gamePage: GamePage;
+export type GamePage = 'Landing' | 'GameBoard';
+export type GameType = 'VsComputer' | 'VsHuman';
+export type GameStateState = {
+  gameType: GameType | undefined;
+  gamePage: GamePage | undefined;
+  playerNames: string[];
   isReady: boolean;
   rulesUnderstood: boolean;
   gameMode: GameMode | undefined;
-  playerOneType: PlayerType;
-  playerTwoType: PlayerType;
-  currentPlayer: PlayerNumber;
+  playerOneType: PlayerType | undefined;
+  playerTwoType: PlayerType | undefined;
+  currentPlayer: PlayerNumber | undefined;
   player1Moves: BoardMove[];
   player2Moves: BoardMove[];
   lastMove: BoardMove | undefined;
@@ -35,7 +39,7 @@ export interface GameStateState {
   boardItems: BoardItems[];
   suggestedMove: BoardMove | undefined;
   scoringMoves: BoardMove[];
-}
+};
 
 export type GameStartPayload = {
   gameMode: GameMode;

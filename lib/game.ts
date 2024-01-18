@@ -31,6 +31,16 @@ export function isUserMove(
     (currentPlayer === 'two' && playerTwoType === PlayerType.Human)
   );
 }
+export function isComputerMove(
+  currentPlayer: PlayerNumber,
+  playerOneType: PlayerType,
+  playerTwoType: PlayerType,
+): boolean {
+  return (
+    (currentPlayer === 'one' && playerOneType === PlayerType.Computer) ||
+    (currentPlayer === 'two' && playerTwoType === PlayerType.Computer)
+  );
+}
 
 export function isGameFinished(boardItems: BoardItems[]) {
   const boards = boardItems.map(item => new Board(item));

@@ -5,6 +5,7 @@ const initialState: SettingsState = {
   darkMode: OnOffMode.On,
   soundMode: OnOffMode.On,
   showSuggestedMove: OnOffMode.On,
+  showBoardValue: OnOffMode.Off,
 };
 const settingsSlice = createSlice({
   name: 'settingsSlice',
@@ -19,8 +20,15 @@ const settingsSlice = createSlice({
     updateShowSuggestedMove: (state, action: PayloadAction<OnOffMode>) => {
       state.showSuggestedMove = action.payload;
     },
+    updateShowBoardValue: (state, action: PayloadAction<OnOffMode>) => {
+      state.showBoardValue = action.payload;
+    },
   },
 });
-export const {updateDarkMode, updateSoundMode, updateShowSuggestedMove} =
-  settingsSlice.actions;
+export const {
+  updateDarkMode,
+  updateSoundMode,
+  updateShowSuggestedMove,
+  updateShowBoardValue,
+} = settingsSlice.actions;
 export default settingsSlice;

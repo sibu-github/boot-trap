@@ -2,7 +2,6 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
   GameStartPayload,
   GameStateState,
-  OnOffMode,
   UpdateMovePayload,
 } from '../definitions';
 import {
@@ -18,14 +17,17 @@ import {
 import {AppThunk} from './store';
 import {BOT_MOVE_TIMEOUT} from '../utils';
 import {playClickTwoSound} from '../utils/sound';
+import {isSuggestion} from '../hooks';
 
 const initialState: GameStateState = {
-  gamePage: 'Landing',
+  gameType: undefined,
+  gamePage: undefined,
+  playerNames: [],
   rulesUnderstood: false,
   isReady: false,
   gameMode: undefined,
-  playerOneType: PlayerType.Human,
-  playerTwoType: PlayerType.Computer,
+  playerOneType: undefined,
+  playerTwoType: undefined,
   currentPlayer: 'one',
   player1Moves: [],
   player2Moves: [],
@@ -37,8 +39,11 @@ const initialState: GameStateState = {
 };
 
 export const computerMoveThunk = (): AppThunk => async (dispatch, getState) => {
-  const {gameMode, playerOneType, boardItems} = getState().gameState;
+  const {gameType, gameMode, playerOneType, boardItems} = getState().gameState;
   const {soundMode, showSuggestedMove} = getState().settings;
+  if (gameType !== 'VsComputer') {
+    return;
+  }
   dispatch(updateSuggestedMove(undefined));
   const move = findNextMove(boardItems, gameMode);
   const newBoards = makeMove(move, boardItems);
@@ -50,7 +55,7 @@ export const computerMoveThunk = (): AppThunk => async (dispatch, getState) => {
     playClickTwoSound();
   }
   await dispatch(updateMove({move, newBoardItems, player}));
-  if (showSuggestedMove === OnOffMode.On) {
+  if (isSuggestion(gameType, showSuggestedMove)) {
     let suggestedMove: BoardMove | undefined;
     if (!isGameFinished(newBoardItems)) {
       suggestedMove = findNextMove(newBoardItems);
@@ -73,13 +78,20 @@ const gameStateSlice = createSlice({
       state.isReady = false;
     },
     resetGame: state => {
-      state.gameMode = undefined;
+      state.gameType = initialState.gameType;
+      state.gamePage = 'Landing';
       state.isReady = false;
+      state.gameMode = undefined;
+      state.playerOneType = undefined;
+      state.playerTwoType = undefined;
+      state.currentPlayer = 'one';
+      state.player1Moves = [];
+      state.player2Moves = [];
       state.lastMove = undefined;
       state.winner = undefined;
+      state.boardItems = [];
       state.suggestedMove = undefined;
       state.scoringMoves = [];
-      state.gamePage = 'Landing';
     },
     startPlay: (state, action: PayloadAction<GameStartPayload>) => {
       state.gamePage = 'GameBoard';

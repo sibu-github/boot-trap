@@ -7,7 +7,15 @@ import {playClickOneSound} from '../utils/sound';
 import GameMoves from './GameMoves';
 import BoardView from './BoardView';
 import PlayerInfo from './PlayerInfo';
-import {Board, BoardMove, isPPositionMove, isUserMove, makeMove} from '../lib';
+import GameWinner from './GameWinner';
+import {
+  Board,
+  BoardMove,
+  isComputerMove,
+  isPPositionMove,
+  isUserMove,
+  makeMove,
+} from '../lib';
 import {
   computerMoveThunk,
   newGame,
@@ -15,7 +23,6 @@ import {
   updateMove,
   updateScoringMove,
 } from '../redux/gameState';
-import GameWinner from './GameWinner';
 
 function GameBoardView() {
   const textColor = useTextColor();
@@ -35,6 +42,11 @@ function GameBoardView() {
   } = useAppSelector(state => state.gameState);
   const dispatch = useAppDispatch();
 
+  if (!currentPlayer || !playerOneType || !playerTwoType) {
+    console.log({currentPlayer, playerOneType, playerTwoType});
+    throw new Error('Incorrect game initialization');
+  }
+
   useEffect(() => {
     const backAction = () => {
       dispatch(resetGame());
@@ -48,21 +60,17 @@ function GameBoardView() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const startNewGame = () => {
-    dispatch(newGame());
-  };
-
   useEffect(() => {
     if (!isReady || winner) {
       return;
     }
-    if (!isUserMove(currentPlayer, playerOneType, playerTwoType)) {
+    if (isComputerMove(currentPlayer, playerOneType, playerTwoType)) {
       dispatch(computerMoveThunk());
     }
   }, [currentPlayer, dispatch, isReady, playerOneType, playerTwoType, winner]);
 
   useEffect(() => {
-    startNewGame();
+    dispatch(newGame());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

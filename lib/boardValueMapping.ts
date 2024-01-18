@@ -1,6 +1,6 @@
 import {MARKER_CHAR, MisereQuotient, ValueMapping} from './definitions';
 
-const stepDownTransform = (val: number, div: number, mul: number): number => {
+function stepDownTransform(val: number, div: number, mul: number): number {
   if (div === 0 || div === 1) {
     return val;
   }
@@ -9,7 +9,7 @@ const stepDownTransform = (val: number, div: number, mul: number): number => {
     num = (num / div) * mul;
   }
   return num;
-};
+}
 
 const transformd2Eqc2 = (val: number): number => {
   const d2 = MisereQuotient.d * MisereQuotient.d;
@@ -81,14 +81,17 @@ const valueMapping1X: ValueMapping[] = [
   {
     indexes: [[0], [2], [6], [8]],
     value: MisereQuotient.one,
+    symbol: '1',
   },
   {
     indexes: [[1], [3], [5], [7]],
     value: MisereQuotient.one,
+    symbol: '1',
   },
   {
     indexes: [[4]],
     value: MisereQuotient.c * MisereQuotient.c,
+    symbol: 'c²',
   },
 ];
 
@@ -105,6 +108,7 @@ const valueMapping2X: ValueMapping[] = [
       [7, 8],
     ],
     value: MisereQuotient.a * MisereQuotient.d,
+    symbol: 'ad',
   },
   {
     indexes: [
@@ -114,6 +118,7 @@ const valueMapping2X: ValueMapping[] = [
       [6, 8],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -123,6 +128,7 @@ const valueMapping2X: ValueMapping[] = [
       [4, 8],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -136,6 +142,7 @@ const valueMapping2X: ValueMapping[] = [
       [5, 6],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -143,6 +150,7 @@ const valueMapping2X: ValueMapping[] = [
       [2, 6],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -154,6 +162,7 @@ const valueMapping2X: ValueMapping[] = [
       [3, 5],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -163,6 +172,7 @@ const valueMapping2X: ValueMapping[] = [
       [4, 7],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
 ];
 
@@ -175,6 +185,7 @@ const valueMapping3X: ValueMapping[] = [
       [5, 7, 8],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -188,6 +199,7 @@ const valueMapping3X: ValueMapping[] = [
       [2, 4, 5],
     ],
     value: MisereQuotient.a * MisereQuotient.b,
+    symbol: 'qb',
   },
   {
     indexes: [
@@ -209,6 +221,7 @@ const valueMapping3X: ValueMapping[] = [
       [3, 7, 8],
     ],
     value: MisereQuotient.d,
+    symbol: 'd',
   },
   {
     indexes: [
@@ -226,6 +239,7 @@ const valueMapping3X: ValueMapping[] = [
       [5, 6, 8],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -239,6 +253,7 @@ const valueMapping3X: ValueMapping[] = [
       [2, 6, 7],
     ],
     value: MisereQuotient.d,
+    symbol: 'd',
   },
   {
     indexes: [
@@ -248,6 +263,7 @@ const valueMapping3X: ValueMapping[] = [
       [4, 6, 8],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -257,6 +273,7 @@ const valueMapping3X: ValueMapping[] = [
       [2, 6, 8],
     ],
     value: MisereQuotient.a * MisereQuotient.b,
+    symbol: 'ab',
   },
   {
     indexes: [
@@ -270,6 +287,7 @@ const valueMapping3X: ValueMapping[] = [
       [2, 4, 7],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -279,6 +297,7 @@ const valueMapping3X: ValueMapping[] = [
       [0, 5, 7],
     ],
     value: MisereQuotient.one,
+    symbol: '1',
   },
   {
     indexes: [
@@ -288,6 +307,7 @@ const valueMapping3X: ValueMapping[] = [
       [4, 5, 7],
     ],
     value: MisereQuotient.a * MisereQuotient.b,
+    symbol: 'ab',
   },
   {
     indexes: [
@@ -297,6 +317,7 @@ const valueMapping3X: ValueMapping[] = [
       [3, 5, 7],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
 ];
 
@@ -309,6 +330,7 @@ const valueMapping4X: ValueMapping[] = [
       [4, 5, 7, 8],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -322,6 +344,7 @@ const valueMapping4X: ValueMapping[] = [
       [1, 5, 7, 8],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -331,6 +354,7 @@ const valueMapping4X: ValueMapping[] = [
       [0, 5, 7, 8],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -344,6 +368,7 @@ const valueMapping4X: ValueMapping[] = [
       [2, 4, 5, 7],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -357,6 +382,7 @@ const valueMapping4X: ValueMapping[] = [
       [0, 2, 4, 5],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -370,6 +396,7 @@ const valueMapping4X: ValueMapping[] = [
       [0, 2, 5, 7],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -383,6 +410,7 @@ const valueMapping4X: ValueMapping[] = [
       [2, 3, 5, 7],
     ],
     value: MisereQuotient.a * MisereQuotient.b,
+    symbol: 'ab',
   },
   {
     indexes: [
@@ -392,6 +420,7 @@ const valueMapping4X: ValueMapping[] = [
       [0, 3, 7, 8],
     ],
     value: MisereQuotient.a * MisereQuotient.b,
+    symbol: 'ab',
   },
   {
     indexes: [
@@ -401,6 +430,7 @@ const valueMapping4X: ValueMapping[] = [
       [0, 2, 3, 6],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -414,6 +444,7 @@ const valueMapping4X: ValueMapping[] = [
       [2, 3, 6, 8],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -423,6 +454,7 @@ const valueMapping4X: ValueMapping[] = [
       [2, 3, 5, 6],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -432,10 +464,12 @@ const valueMapping4X: ValueMapping[] = [
       [0, 4, 5, 6],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [[0, 2, 6, 8]],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -445,10 +479,12 @@ const valueMapping4X: ValueMapping[] = [
       [2, 3, 4, 7],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [[1, 3, 5, 7]],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
 ];
 
@@ -461,6 +497,7 @@ const valueMapping5X: ValueMapping[] = [
       [1, 3, 5, 7, 8],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -474,6 +511,7 @@ const valueMapping5X: ValueMapping[] = [
       [1, 2, 5, 6, 7],
     ],
     value: MisereQuotient.b,
+    symbol: 'b',
   },
   {
     indexes: [
@@ -487,6 +525,7 @@ const valueMapping5X: ValueMapping[] = [
       [0, 4, 5, 6, 7],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -496,6 +535,7 @@ const valueMapping5X: ValueMapping[] = [
       [0, 2, 3, 5, 7],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
   {
     indexes: [
@@ -505,6 +545,7 @@ const valueMapping5X: ValueMapping[] = [
       [0, 2, 5, 6, 7],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
 ];
 
@@ -515,6 +556,7 @@ const valueMapping6X: ValueMapping[] = [
       [1, 2, 3, 5, 6, 7],
     ],
     value: MisereQuotient.a,
+    symbol: 'a',
   },
 ];
 

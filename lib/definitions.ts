@@ -14,6 +14,7 @@ export enum MisereQuotient {
 export type ValueMapping = {
   indexes: number[][];
   value: MisereQuotient;
+  symbol: string;
 };
 
 export enum PlayerType {
@@ -42,3 +43,16 @@ export enum DeadBoardLineType {
   DiagonalOne = 7,
   DiagonalTwo = 8,
 }
+
+export const SUPERSCRIPTS_CHARS = [
+  '⁰',
+  '¹',
+  '²',
+  '³',
+  '⁴',
+  '⁵',
+  '⁶',
+  '⁷',
+  '⁸',
+  '⁹',
+];

@@ -19,6 +19,22 @@ import {newGame, resetGame} from '../redux/gameState';
 import {useShowSuggestedMove, useSoundMode} from '../hooks';
 
 function GameWinner() {
+  const {gameType, winner} = useAppSelector(state => state.gameState);
+
+  if (!winner) {
+    return false;
+  }
+
+  if (gameType === 'VsComputer') {
+    return <WinnerVsComputer />;
+  }
+
+  if (gameType === 'VsHuman') {
+    return <WinnerVsHuman />;
+  }
+}
+
+function WinnerVsComputer() {
   const {gameMode, winner, playerOneType, scoringMoves} = useAppSelector(
     state => state.gameState,
   );
@@ -112,6 +128,14 @@ function GameWinner() {
           style={styles.resetBtn}
         />
       </View>
+    </View>
+  );
+}
+
+function WinnerVsHuman() {
+  return (
+    <View style={styles.container}>
+      <Text>Winner:</Text>
     </View>
   );
 }

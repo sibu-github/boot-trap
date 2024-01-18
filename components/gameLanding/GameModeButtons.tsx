@@ -13,7 +13,7 @@ function GameModeButtons() {
   const onPracticeMode = () => dispatch(setGameMode('Practice'));
   const onChallengeMode = () => dispatch(setGameMode('Challenge'));
 
-  if (!rulesUnderstood || !gameType || !!gameMode) {
+  if (!rulesUnderstood || gameType !== 'VsComputer' || !!gameMode) {
     return false;
   }
 

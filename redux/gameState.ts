@@ -1,5 +1,6 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
+  GameStartMultiPlayerPayload,
   GameStartPayload,
   GameStateState,
   GameType,
@@ -109,6 +110,22 @@ const gameStateSlice = createSlice({
       state.playerOneType = action.payload.playerOneType;
       state.playerTwoType = action.payload.playerTwoType;
     },
+    startPlayMultiPlayer: (
+      state,
+      action: PayloadAction<GameStartMultiPlayerPayload>,
+    ) => {
+      const {playerOneName, playerTwoName} = action.payload;
+      state.gamePage = 'GameBoard';
+      state.gameMode = undefined;
+      state.player1Moves = [];
+      state.player2Moves = [];
+      state.playerOneType = PlayerType.Human;
+      state.playerTwoType = PlayerType.Human;
+      state.lastMove = undefined;
+      state.winner = undefined;
+      state.boardItems = [];
+      state.playerNames = [playerOneName, playerTwoName];
+    },
     newGame: state => {
       state.isReady = true;
       state.currentPlayer = 'one';
@@ -152,6 +169,7 @@ export const {
   setGameMode,
   resetGame,
   startPlay,
+  startPlayMultiPlayer,
   newGame,
   updateMove,
   updateSuggestedMove,

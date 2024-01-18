@@ -11,6 +11,7 @@ import RulesButtons from './RulesButtons';
 import GameTypeButtons from './GameTypeButtons';
 import GameModeButtons from './GameModeButtons';
 import BackIcon from './BackIcon';
+import PlayerNames from './PlayerNames';
 
 const GAME_LANDING_IMAGE = '../../images/game_landing.png';
 
@@ -28,6 +29,7 @@ function GameLanding() {
         <GameTypeButtons />
         <GameModeButtons />
         <PlayerButtons />
+        <PlayerNames />
         <BackIcon />
       </View>
     </View>
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
   },
   btnWrapper: {
     position: 'absolute',
-    top: '70%',
+    bottom: '15%',
   },
   backIcon: {
     alignSelf: 'center',

@@ -47,6 +47,11 @@ export type GameStartPayload = {
   playerTwoType: PlayerType;
 };
 
+export type GameStartMultiPlayerPayload = {
+  playerOneName: string;
+  playerTwoName: string;
+};
+
 export type UpdateMovePayload = {
   move: BoardMove;
   newBoardItems: BoardItems[];

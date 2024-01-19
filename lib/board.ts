@@ -45,13 +45,13 @@ export class Board {
     return board;
   }
 
-  public boardValue(): number {
+  public boardValue() {
     if (this.isDead()) {
-      return MisereQuotient.one;
+      return {value: MisereQuotient.one, symbol: '1'};
     }
     // empty board
     if (this.items.flat().filter(e => e === MARKER_CHAR).length === 0) {
-      return MisereQuotient.c;
+      return {value: MisereQuotient.c, symbol: 'c'};
     }
     return findInValueMapping(this._items);
   }

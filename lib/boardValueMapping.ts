@@ -199,7 +199,7 @@ const valueMapping3X: ValueMapping[] = [
       [2, 4, 5],
     ],
     value: MisereQuotient.a * MisereQuotient.b,
-    symbol: 'qb',
+    symbol: 'ab',
   },
   {
     indexes: [
@@ -573,7 +573,7 @@ export function findInValueMapping(items: string[][]) {
   const list = items.flat();
   for (let val of allMapping) {
     if (val.indexes.some(v => v.every(i => list[i] === MARKER_CHAR))) {
-      return val.value;
+      return {value: val.value, symbol: val.symbol};
     }
   }
   throw new Error('Something messed up :(');

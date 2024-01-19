@@ -12,6 +12,7 @@ import {
 import {OnOffMode} from '../definitions';
 import {
   updateDarkMode,
+  updateShowBoardValue,
   updateShowSuggestedMove,
   updateSoundMode,
 } from '../redux/settings';
@@ -20,9 +21,8 @@ import {version as appVersion} from '../package.json';
 function Settings() {
   const backgroundColor = useBackgroundColor();
   const textColor = useTextColor();
-  const {darkMode, soundMode, showSuggestedMove} = useAppSelector(
-    state => state.settings,
-  );
+  const {darkMode, soundMode, showSuggestedMove, showBoardValue} =
+    useAppSelector(state => state.settings);
   const dispatch = useAppDispatch();
   const toggleDarkMode = () => {
     dispatch(
@@ -41,6 +41,14 @@ function Settings() {
     dispatch(
       updateShowSuggestedMove(
         showSuggestedMove === OnOffMode.On ? OnOffMode.Off : OnOffMode.On,
+      ),
+    );
+  };
+
+  const toggleShowBoardValue = () => {
+    dispatch(
+      updateShowBoardValue(
+        showBoardValue === OnOffMode.On ? OnOffMode.Off : OnOffMode.On,
       ),
     );
   };
@@ -79,6 +87,18 @@ function Settings() {
           }
           trackColor={{false: COLOR_GREY, true: COLOR_YELLOW}}
           onValueChange={toggleShowSuggestedMove}
+        />
+      </View>
+      <View style={styles.labelWrapper}>
+        <Text style={[styles.labelTxt, {color: textColor}]}>Board Value</Text>
+        <Switch
+          value={showBoardValue === OnOffMode.On}
+          style={styles.switch}
+          thumbColor={
+            showBoardValue === OnOffMode.On ? COLOR_YELLOW : COLOR_GREY
+          }
+          trackColor={{false: COLOR_GREY, true: COLOR_YELLOW}}
+          onValueChange={toggleShowBoardValue}
         />
       </View>
 

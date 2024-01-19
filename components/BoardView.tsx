@@ -23,7 +23,7 @@ import {
   SMALL_BOARD_CELL_SIZE,
   SMALL_BOARD_TXT_SIZE,
 } from '../utils';
-import {useTextColor} from '../hooks';
+import {useShowBoardValue, useTextColor} from '../hooks';
 import {BoardViewProps} from '../definitions';
 
 function borderStyle(x: number, y: number) {
@@ -107,6 +107,7 @@ function deadBoardMarkerLineStyle(
 
 function BoardView(props: BoardViewProps) {
   const textColor = useTextColor(props.flipTextColor);
+  const showBoardValue = useShowBoardValue();
   const containerStyle = {width: BIG_BOARD_CELL_SIZE * BOARD_ROW_SIZE + 10};
   if (props.smallBoard) {
     containerStyle.width = SMALL_BOARD_CELL_SIZE * BOARD_ROW_SIZE + 10;
@@ -176,59 +177,72 @@ function BoardView(props: BoardViewProps) {
   const cellMarkerTxtSize = props.smallBoard ? 8 : 10;
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      {props.board.items.map((row, y) => (
-        <View key={y} style={styles.boardRow}>
-          <Text
-            style={[
-              styles.rowMarkerTxt,
-              {color: textColor, fontSize: rowMarkerTxtSize},
-            ]}>
-            {ROW_MARKERS[props.boardIndex * BOARD_COL_SIZE + y]}
-          </Text>
-          {row.map((cell, x) => (
-            <Pressable
-              key={x}
-              style={[styles.cell, cellStyle, borderStyle(x, y)]}
-              onPress={() => onPress(x, y)}>
-              <View
-                style={[
-                  styles.cellTxtWrapper,
-                  lastMoveCellStyle(x, y),
-                  suggestedMoveCellStyle(x, y),
-                ]}>
-                <Text style={[styles.cellTxt, cellTxtStyle(x, y)]}>{cell}</Text>
-              </View>
-            </Pressable>
+    <View style={styles.outerContainer}>
+      <View style={[styles.container, containerStyle]}>
+        {props.board.items.map((row, y) => (
+          <View key={y} style={styles.boardRow}>
+            <Text
+              style={[
+                styles.rowMarkerTxt,
+                {color: textColor, fontSize: rowMarkerTxtSize},
+              ]}>
+              {ROW_MARKERS[props.boardIndex * BOARD_COL_SIZE + y]}
+            </Text>
+            {row.map((cell, x) => (
+              <Pressable
+                key={x}
+                style={[styles.cell, cellStyle, borderStyle(x, y)]}
+                onPress={() => onPress(x, y)}>
+                <View
+                  style={[
+                    styles.cellTxtWrapper,
+                    lastMoveCellStyle(x, y),
+                    suggestedMoveCellStyle(x, y),
+                  ]}>
+                  <Text style={[styles.cellTxt, cellTxtStyle(x, y)]}>
+                    {cell}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+          </View>
+        ))}
+        <View style={styles.boardRow}>
+          {COL_MARKERS.map(m => (
+            <Text
+              key={m}
+              style={[
+                styles.colMarkerTxt,
+                {color: textColor, fontSize: cellMarkerTxtSize},
+              ]}>
+              {m}
+            </Text>
           ))}
         </View>
-      ))}
-      <View style={styles.boardRow}>
-        {COL_MARKERS.map(m => (
-          <Text
-            key={m}
-            style={[
-              styles.colMarkerTxt,
-              {color: textColor, fontSize: cellMarkerTxtSize},
-            ]}>
-            {m}
-          </Text>
-        ))}
+        {props.board?.isDead() && <View style={styles.deadBoard} />}
+        {props.board?.isDead() && (
+          <View
+            style={deadBoardMarkerLineStyle(
+              props.board?.getDeadBoardLineType(),
+              !!props.smallBoard,
+            )}
+          />
+        )}
       </View>
-      {props.board?.isDead() && <View style={styles.deadBoard} />}
-      {props.board?.isDead() && (
-        <View
-          style={deadBoardMarkerLineStyle(
-            props.board?.getDeadBoardLineType(),
-            !!props.smallBoard,
-          )}
-        />
+      {!props.smallBoard && showBoardValue && (
+        <Text style={styles.boardValueTxt}>
+          {props.board.boardValue().symbol}
+        </Text>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
     position: 'relative',
   },
@@ -266,6 +280,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+  },
+  boardValueTxt: {
+    color: COLOR_YELLOW,
+    fontFamily: KALAM_BOLD,
+    fontSize: 20,
+    paddingLeft: 20,
   },
 });
 

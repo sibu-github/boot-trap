@@ -59,7 +59,7 @@ export function cloneBoards(boards: Board[]) {
 }
 
 export function totalBoardValue(boards: Board[]) {
-  const val = boards.reduce((v, board) => v * board.boardValue(), 1);
+  const val = boards.reduce((v, board) => v * board.boardValue().value, 1);
   return applyTransformations(val);
 }
 

@@ -27,13 +27,14 @@ function AboutUs() {
   const bgColor = useBackgroundColor();
 
   return (
-    <ScrollView
-      contentContainerStyle={[styles.container, {backgroundColor: bgColor}]}>
-      <AboutUsSection />
-      <References />
-      <Donate />
-      <View style={styles.blank} />
-    </ScrollView>
+    <View style={[styles.container, {backgroundColor: bgColor}]}>
+      <ScrollView>
+        <AboutUsSection />
+        <References />
+        <Donate />
+        <View style={styles.blank} />
+      </ScrollView>
+    </View>
   );
 }
 

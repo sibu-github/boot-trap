@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {captureScreen} from 'react-native-view-shot';
 import Share from 'react-native-share';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -17,6 +17,22 @@ import {playGameOverSound, playGameWinSound} from '../utils/sound';
 import Button from './Button';
 import {newGame, resetGame} from '../redux/gameState';
 import {useShowSuggestedMove, useSoundMode} from '../hooks';
+
+const FLAG_LEFT_PATH = '../images/flag_left.png';
+const FLAG_RIGHT_PATH = '../images/flag_right.png';
+
+async function onShare() {
+  try {
+    const url = await captureScreen({format: 'jpg', quality: 0.8});
+    await Share.open({
+      title: 'Boot Trap',
+      message: "I've won in Boot Trap. Can you?",
+      url,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 function GameWinner() {
   const {gameType, winner} = useAppSelector(state => state.gameState);
@@ -64,19 +80,6 @@ function WinnerVsComputer() {
 
   const playAgain = () => dispatch(newGame());
   const resetOptions = () => dispatch(resetGame());
-
-  const onShare = async () => {
-    try {
-      const url = await captureScreen({format: 'jpg', quality: 0.8});
-      await Share.open({
-        title: 'Boot Trap',
-        message: "I've won in Boot Trap. Can you?",
-        url,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   if (!winner) {
     return;
@@ -133,9 +136,54 @@ function WinnerVsComputer() {
 }
 
 function WinnerVsHuman() {
+  const {playerNames, winner} = useAppSelector(state => state.gameState);
+  const soundMode = useSoundMode();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!winner) {
+      return;
+    }
+    if (soundMode) {
+      playGameWinSound();
+    }
+  }, [soundMode, winner]);
+
+  const winnerName = () => {
+    return winner === 'one' ? playerNames[0] : playerNames[1];
+  };
+  const playAgain = () => dispatch(newGame());
+  const resetOptions = () => dispatch(resetGame());
+
   return (
     <View style={styles.container}>
-      <Text>Winner:</Text>
+      <View style={styles.winFlagWrapper}>
+        <Image source={require(FLAG_LEFT_PATH)} />
+        <Text style={styles.winFlagMessage}>{winnerName()} wins!!</Text>
+        <Image source={require(FLAG_RIGHT_PATH)} />
+      </View>
+      <MaterialCommunityIcons name="hand-clap" size={50} color={COLOR_BLACK} />
+      <Pressable style={styles.shareBtn} onPress={onShare}>
+        <Text style={styles.shareBtnTxt}>Share your success</Text>
+        <AntDesign
+          name="sharealt"
+          size={20}
+          color={COLOR_BLACK}
+          onPress={onShare}
+        />
+      </Pressable>
+      <View style={styles.btnWrapper}>
+        <Button
+          text="Play Again"
+          onClick={playAgain}
+          style={styles.playAgainBtn}
+        />
+        <Button
+          text="Main Menu"
+          onClick={resetOptions}
+          style={styles.resetBtn}
+        />
+      </View>
     </View>
   );
 }
@@ -192,6 +240,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLOR_BLACK,
     textDecorationLine: 'underline',
+  },
+  winFlagWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+  },
+  winFlagMessage: {
+    flex: 1,
+    fontFamily: KALAM_BOLD,
+    fontSize: 24,
+    paddingHorizontal: 10,
+    textAlign: 'center',
   },
 });
 

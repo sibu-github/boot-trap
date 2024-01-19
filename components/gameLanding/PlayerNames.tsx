@@ -15,8 +15,12 @@ import {playClickOneSound} from '../../utils/sound';
 import {useAppDispatch, useAppSelector} from '../../redux/useTypeSelectorHook';
 import {startPlayMultiPlayer} from '../../redux/gameState';
 
+function noOp() {}
+
 function PlayerNames() {
-  const {rulesUnderstood, gameType} = useAppSelector(state => state.gameState);
+  const {rulesUnderstood, gameType, playerNames} = useAppSelector(
+    state => state.gameState,
+  );
   const [playerOneName, setPlayerOneName] = useState('');
   const [playerTwoName, setPlayerTwoName] = useState('');
   const [disabled, setDisabled] = useState(true);
@@ -27,6 +31,13 @@ function PlayerNames() {
     inputRange: [0, 1],
     outputRange: ['0deg', '180deg'],
   });
+
+  useEffect(() => {
+    if (playerNames && playerNames.length > 1) {
+      setPlayerOneName(playerNames[0]);
+      setPlayerTwoName(playerNames[1]);
+    }
+  }, [playerNames]);
 
   const rotateIcon = () => {
     rotateAnim.current.resetAnimation();
@@ -124,7 +135,7 @@ function PlayerNames() {
       </View>
       <Button
         text="Play"
-        onClick={onPlay}
+        onClick={disabled ? noOp : onPlay}
         style={[styles.playBtn, btnStyle()]}
         textStyle={btnTxtStyle()}
       />

@@ -28,6 +28,7 @@ function GameBoardView() {
   const textColor = useTextColor();
   const soundMode = useSoundMode();
   const {
+    gameType,
     isReady,
     playerOneType,
     playerTwoType,
@@ -84,7 +85,7 @@ function GameBoardView() {
     const newBoards = makeMove(move, boardItems);
     const newBoardItems = newBoards.map(b => b.items);
     dispatch(updateMove({move, newBoardItems, player: currentPlayer}));
-    if (isPPositionMove(newBoards)) {
+    if (gameType === 'VsComputer' && isPPositionMove(newBoards)) {
       dispatch(updateScoringMove(move));
     }
   };

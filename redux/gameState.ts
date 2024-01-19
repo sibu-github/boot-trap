@@ -80,7 +80,6 @@ const gameStateSlice = createSlice({
       state.gameMode = undefined;
       state.playerOneType = undefined;
       state.playerTwoType = undefined;
-      state.playerNames = [];
       state.isReady = false;
     },
     setGameMode: (state, action: PayloadAction<GameMode>) => {

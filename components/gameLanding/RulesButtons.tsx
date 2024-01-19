@@ -10,7 +10,7 @@ function RulesButtons() {
   const dispatch = useAppDispatch();
 
   const onShowMeRules = () => navigateTo('Rules');
-  const onUnderstood = () => dispatch(setRulesUnderstood());
+  const onUnderstood = () => dispatch(setRulesUnderstood(true));
 
   if (rulesUnderstood) {
     return false;

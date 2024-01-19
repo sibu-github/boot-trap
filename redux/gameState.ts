@@ -70,19 +70,20 @@ const gameStateSlice = createSlice({
   name: 'gameStateSlice',
   initialState,
   reducers: {
-    setRulesUnderstood: state => {
-      state.rulesUnderstood = true;
+    setRulesUnderstood: (state, action: PayloadAction<boolean>) => {
+      state.rulesUnderstood = action.payload;
+      state.gameType = undefined;
       state.gameMode = undefined;
       state.isReady = false;
     },
-    setGameType: (state, action: PayloadAction<GameType>) => {
+    setGameType: (state, action: PayloadAction<GameType | undefined>) => {
       state.gameType = action.payload;
       state.gameMode = undefined;
       state.playerOneType = undefined;
       state.playerTwoType = undefined;
       state.isReady = false;
     },
-    setGameMode: (state, action: PayloadAction<GameMode>) => {
+    setGameMode: (state, action: PayloadAction<GameMode | undefined>) => {
       state.gameMode = action.payload;
       state.isReady = false;
     },

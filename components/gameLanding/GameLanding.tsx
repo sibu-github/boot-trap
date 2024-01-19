@@ -79,9 +79,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: '15%',
   },
-  backIcon: {
-    alignSelf: 'center',
-  },
 });
 
 export default GameLanding;

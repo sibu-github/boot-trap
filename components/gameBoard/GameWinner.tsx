@@ -10,16 +10,16 @@ import {
   COLOR_OVERLAY_DARK,
   KALAM_BOLD,
   KALAM_REGULAR,
-} from '../utils';
-import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
-import {PlayerType} from '../lib';
-import {playGameOverSound, playGameWinSound} from '../utils/sound';
-import Button from './Button';
-import {newGame, resetGame} from '../redux/gameState';
-import {useShowSuggestedMove, useSoundMode} from '../hooks';
+} from '../../utils';
+import {useAppDispatch, useAppSelector} from '../../redux/useTypeSelectorHook';
+import {PlayerType} from '../../lib';
+import {playGameOverSound, playGameWinSound} from '../../utils/sound';
+import Button from '../Button';
+import {newGame, resetGame} from '../../redux/gameState';
+import {useShowSuggestedMove, useSoundMode} from '../../hooks';
 
-const FLAG_LEFT_PATH = '../images/flag_left.png';
-const FLAG_RIGHT_PATH = '../images/flag_right.png';
+const FLAG_LEFT_PATH = '../../images/flag_left.png';
+const FLAG_RIGHT_PATH = '../../images/flag_right.png';
 
 async function onShare() {
   try {

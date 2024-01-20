@@ -1,5 +1,6 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
+  DeleteMovePayload,
   GameStartMultiPlayerPayload,
   GameStartPayload,
   GameStateState,
@@ -160,6 +161,15 @@ const gameStateSlice = createSlice({
     updateScoringMove: (state, action: PayloadAction<BoardMove>) => {
       state.scoringMoves.push(action.payload);
     },
+    deleteMove: (state, action: PayloadAction<DeleteMovePayload>) => {
+      state.boardItems = action.payload.newBoardItems;
+      state.currentPlayer = action.payload.newCurrentPlayer;
+      state.lastMove = action.payload.newLastMove;
+      state.player1Moves = action.payload.player1MovesCopy;
+      state.player2Moves = action.payload.player2MovesCopy;
+      state.scoringMoves = action.payload.scoringMovesCopy;
+      state.suggestedMove = undefined;
+    },
   },
 });
 
@@ -174,5 +184,6 @@ export const {
   updateMove,
   updateSuggestedMove,
   updateScoringMove,
+  deleteMove,
 } = gameStateSlice.actions;
 export default gameStateSlice;

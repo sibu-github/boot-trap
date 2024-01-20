@@ -54,6 +54,13 @@ export function makeMove(move: BoardMove, boardItems: BoardItems[]) {
   return boardsClone;
 }
 
+export function clearMove(move: BoardMove, boardItems: BoardItems[]) {
+  const boardsClone = boardItems.map(item => new Board(item));
+  const {boardIndex, x, y} = move;
+  boardsClone[boardIndex].clearAtPos(x, y);
+  return boardsClone;
+}
+
 export function cloneBoards(boards: Board[]) {
   return boards.map(board => board.clone());
 }

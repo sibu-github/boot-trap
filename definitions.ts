@@ -58,6 +58,15 @@ export type UpdateMovePayload = {
   player: PlayerNumber;
 };
 
+export type DeleteMovePayload = {
+  newBoardItems: BoardItems[];
+  newCurrentPlayer: PlayerNumber;
+  newLastMove: BoardMove | undefined;
+  player1MovesCopy: BoardMove[];
+  player2MovesCopy: BoardMove[];
+  scoringMovesCopy: BoardMove[];
+};
+
 export type RootStackParamList = {
   Game: undefined;
   Rules: undefined;
@@ -86,4 +95,5 @@ export type GameMovesProps = {
   winner?: PlayerNumber | undefined;
   smallBoard?: boolean;
   flipTextColor?: boolean;
+  onUndo?: () => void;
 };

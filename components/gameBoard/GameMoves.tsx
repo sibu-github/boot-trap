@@ -1,7 +1,7 @@
 import React from 'react';
-import {GameMovesProps} from '../definitions';
+import {GameMovesProps} from '../../definitions';
 import {StyleSheet, Text, View} from 'react-native';
-import {useTextColor} from '../hooks';
+import {useTextColor} from '../../hooks';
 import {
   COLOR_GREY,
   COLOR_YELLOW,
@@ -9,9 +9,9 @@ import {
   PLAYER_1_COLOR,
   PLAYER_2_COLOR,
   translateBoardMove,
-} from '../utils';
-import {BoardMove} from '../lib';
-import DotView from './DotView';
+} from '../../utils';
+import {BoardMove} from '../../lib';
+import DotView from '../DotView';
 
 function isScoringMove(move: BoardMove, props: GameMovesProps) {
   const {scoringMoves, winner} = props;
@@ -111,6 +111,13 @@ function GameMoves(props: GameMovesProps) {
           </Text>
         </View>
       ))}
+      {!props.smallBoard && props.onUndo && (
+        <Text
+          style={[{color: textColor}, styles.undoLink]}
+          onPress={props.onUndo}>
+          Undo
+        </Text>
+      )}
     </View>
   );
 }
@@ -153,6 +160,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
     paddingTop: 3,
+  },
+  undoLink: {
+    fontFamily: KALAM_BOLD,
+    fontSize: 14,
+    textDecorationLine: 'underline',
+    marginTop: 'auto',
+    paddingVertical: 10,
   },
 });
 

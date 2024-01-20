@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {BOARD_COL_SIZE, BOARD_ROW_SIZE, DeadBoardLineType} from '../lib';
+import {BOARD_COL_SIZE, BOARD_ROW_SIZE, DeadBoardLineType} from '../../lib';
 import {
   BIG_BOARD_CELL_SIZE,
   BIG_BOARD_TXT_SIZE,
@@ -22,9 +22,9 @@ import {
   ROW_MARKERS,
   SMALL_BOARD_CELL_SIZE,
   SMALL_BOARD_TXT_SIZE,
-} from '../utils';
-import {useShowBoardValue, useTextColor} from '../hooks';
-import {BoardViewProps} from '../definitions';
+} from '../../utils';
+import {useShowBoardValue, useTextColor} from '../../hooks';
+import {BoardViewProps} from '../../definitions';
 
 function borderStyle(x: number, y: number) {
   if ((y === 0 || y === 1) && (x === 0 || x === 1)) {

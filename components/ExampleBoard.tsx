@@ -4,9 +4,9 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useBackgroundColor, useTextColor} from '../hooks';
 import {Board, BoardMove, PlayerNumber} from '../lib';
-import BoardView from './BoardView';
+import BoardView from './gameBoard/BoardView';
 import {COLOR_GREEN, COLOR_RED, KALAM_LIGHT} from '../utils';
-import GameMoves from './GameMoves';
+import GameMoves from './gameBoard/GameMoves';
 
 const allMoves: {move: BoardMove; player: PlayerNumber}[] = [
   {move: {boardIndex: 0, x: 0, y: 0}, player: 'one'},

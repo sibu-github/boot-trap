@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TextStyle, View} from 'react-native';
-import {useAppSelector} from '../redux/useTypeSelectorHook';
-import {PlayerType} from '../lib';
+import {useAppSelector} from '../../redux/useTypeSelectorHook';
+import {PlayerType} from '../../lib';
 import {
   COLOR_GREEN,
   COLOR_YELLOW,
@@ -9,9 +9,9 @@ import {
   KALAM_REGULAR,
   PLAYER_1_COLOR,
   PLAYER_2_COLOR,
-} from '../utils';
+} from '../../utils';
 import {StyleProp} from 'react-native';
-import {useShowSuggestedMove, useTextColor} from '../hooks';
+import {useShowSuggestedMove, useTextColor} from '../../hooks';
 
 function PlayerInfo() {
   const textColor = useTextColor();

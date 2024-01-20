@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {useBackgroundColor} from '../hooks';
 import GameLanding from './gameLanding/GameLanding';
 import {useAppDispatch, useAppSelector} from '../redux/useTypeSelectorHook';
-import GameBoardView from './GameBoardView';
+import GameBoardView from './gameBoard/GameBoardView';
 import {useFocusEffect} from '@react-navigation/native';
 import {resetGame} from '../redux/gameState';
 

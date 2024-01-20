@@ -35,8 +35,6 @@ function GameMovesContainer() {
     const player1MovesCopy = player1Moves.map(copyMove);
     const player2MovesCopy = player2Moves.map(copyMove);
     let scoringMovesCopy = scoringMoves.map(copyMove);
-    console.log(player1MovesCopy);
-    console.log(player2MovesCopy);
     const moveToClear =
       currentPlayer === 'one' ? player2MovesCopy.pop() : player1MovesCopy.pop();
     const newLastMove =

@@ -52,13 +52,13 @@ function deadBoardMarkerLineStyle(
     ...line,
     height: lineWidth,
     width: cellSize * 2.5,
-    left: smallBoard ? 10 : 20,
+    left: smallBoard ? 12 : 20,
   };
   const verticalLine: StyleProp<ViewStyle> = {
     ...line,
     height: cellSize * 2.5,
     width: lineWidth,
-    top: smallBoard ? 10 : 20,
+    top: smallBoard ? 5 : 20,
   };
 
   if (lineType === DeadBoardLineType.HorizontalOne) {
@@ -74,33 +74,34 @@ function deadBoardMarkerLineStyle(
     return {...verticalLine, left: smallBoard ? 16 : 35};
   }
   if (lineType === DeadBoardLineType.VerticalTwo) {
-    return {...verticalLine, left: smallBoard ? 36 : 95};
+    return {...verticalLine, left: smallBoard ? 37 : 95};
   }
   if (lineType === DeadBoardLineType.VerticalThree) {
     return {...verticalLine, left: smallBoard ? 56 : 155};
   }
   if (lineType === DeadBoardLineType.DiagonalOne) {
     return {
-      width: cellSize * 4,
+      width: cellSize * 3.5,
       borderTopColor: COLOR_MAROON,
       borderTopWidth: lineWidth,
+      marginLeft: 10,
       transform: [{rotate: '45deg'}],
       transformOrigin: 'top left',
       position: 'absolute',
       top: smallBoard ? 2 : 10,
-      left: smallBoard ? 2 : 10,
+      left: smallBoard ? 2 : 15,
     };
   }
   if (lineType === DeadBoardLineType.DiagonalTwo) {
     return {
-      width: cellSize * 4,
+      width: cellSize * 3.5,
       borderTopColor: COLOR_MAROON,
       borderTopWidth: lineWidth,
       transform: [{rotate: '-45deg'}],
       transformOrigin: 'top right',
       position: 'absolute',
       top: smallBoard ? 2 : 10,
-      right: smallBoard ? 2 : 10,
+      right: smallBoard ? 2 : 15,
     };
   }
 }

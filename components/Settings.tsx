@@ -55,7 +55,7 @@ function Settings() {
 
   return (
     <View style={[styles.container, {backgroundColor}]}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.labelWrapper}>
           <Text style={[styles.labelTxt, {color: textColor}]}>Dark Mode</Text>
           <Switch
@@ -123,7 +123,7 @@ function Settings() {
           What is Board Value?
         </Text>
         <Text style={[styles.para1, {color: textColor}]}>
-          Each board is assigned a value using the symbols [1, a, b, c, d]. For
+          Each board is assigned a value using the symbols 1, a, b, c, d. For
           example, a board with only one "X" at the center is assigned the value
           "c²." For a comprehensive list of board values for different
           positions, please refer to the links in the "References." The total
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    paddingLeft: 20,
+    paddingHorizontal: 10,
   },
   labelWrapper: {
     flexDirection: 'row',

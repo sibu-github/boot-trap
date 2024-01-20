@@ -15,8 +15,6 @@ import {playClickOneSound} from '../../utils/sound';
 import {useAppDispatch, useAppSelector} from '../../redux/useTypeSelectorHook';
 import {startPlayMultiPlayer} from '../../redux/gameState';
 
-function noOp() {}
-
 function PlayerNames() {
   const {rulesUnderstood, gameType, playerNames} = useAppSelector(
     state => state.gameState,
@@ -135,7 +133,7 @@ function PlayerNames() {
       </View>
       <Button
         text="Play"
-        onClick={disabled ? noOp : onPlay}
+        onClick={onPlay}
         style={[styles.playBtn, btnStyle()]}
         textStyle={btnTxtStyle()}
       />

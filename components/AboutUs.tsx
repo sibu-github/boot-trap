@@ -28,7 +28,7 @@ function AboutUs() {
 
   return (
     <View style={[styles.container, {backgroundColor: bgColor}]}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <AboutUsSection />
         <References />
         <Donate />
